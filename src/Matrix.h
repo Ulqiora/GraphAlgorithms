@@ -1,32 +1,23 @@
-#pragma once 
+#pragma once
 #include <exception>
 #include <iostream>
-namespace s21{
-class Matrix{
-private:
-    unsigned int numOfCols,numOfRows;
+namespace s21 {
+class Matrix {
+   private:
+    int _size;
     double** matrixData;
     void allocateMemory();
     void freeMemory();
-    void copyMatrixData(const Matrix&  other);
-public:
-    Matrix(int rows, int cols);
+    void copyMatrixData(const Matrix& other);
+
+   public:
+    Matrix(int newSize);
     Matrix();
     Matrix(const Matrix& other);
-    double& operator()(int i,int j)const{
-        return matrixData[i][j];
-    }
-    ~Matrix(){
-        freeMemory();
-    }
-    int cols(){
-        return numOfCols;
-    }
-    int rows(){
-        return numOfRows;
-    }
-    const Matrix& operator=(const Matrix&  other);
-    void setRows(int newNumOfRows);
-    void setCols(int newNumOfCols);
+    double& operator()(int i, int j) const { return matrixData[i][j]; }
+    ~Matrix() { freeMemory(); }
+    int size() { return _size; }
+    const Matrix& operator=(const Matrix& other);
+    void setSize(int newNumOfRows);
 };
-}
+}  // namespace s21

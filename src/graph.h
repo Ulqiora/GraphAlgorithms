@@ -1,5 +1,7 @@
 #include "Matrix.h"
-
+#include <fstream>
+#include <iostream>
+#include <string>
 namespace s21{
 enum class TypeGraphByDirection{
     UNDIRECRED=0,
