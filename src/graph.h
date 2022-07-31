@@ -23,9 +23,8 @@ private:
     TypeGraphByDirection  typeDirection;
     TypeGraphByWeights typeWeights;
     std::map<std::string,int> namesOfNode;
+    void initTypes();
     void printInfoAboutEdge(int firstNode, int secondNode, std::ofstream &file,const std::string& EdgesInFile,const Matrix& temp);
-    void getTypeByDirectionAndName(std::ifstream& file);
-    void parseLine(bool& name,std::stringstream& ss);
 public:
     graph(){}
     void loadGraphFromFile(std::string filename);

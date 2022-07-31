@@ -1,6 +1,8 @@
 #pragma once
 #include <exception>
 #include <iostream>
+#include <fstream>
+#include <string>
 namespace s21 {
 class Matrix {
    private:
@@ -19,5 +21,6 @@ class Matrix {
     int size() { return _size; }
     const Matrix& operator=(const Matrix& other);
     void setSize(int newNumOfRows);
+    void loadMatrix(std::ifstream& file);
 };
 }  // namespace s21

@@ -2,47 +2,29 @@
 namespace s21 {
 
 void graph::loadGraphFromFile(std::string filename) {
-    namesOfNode.clear();
-    adjacencyMatrix.setSize(0);
-    std::ifstream file(filename);
-    if (!file.is_open()) throw std::invalid_argument("Invalid name file!");
-    getTypeByDirectionAndName(file);
-    std::string lineFile;
-    std::stringstream ss;
-    bool name = true;
-    while (std::getline(file, lineFile)) {
-        ss.clear();
-        ss.str(lineFile);
+    try {
+        typeDirection=TypeGraphByDirection::UNDIRECRED;
+        typeWeights=TypeGraphByWeights::UNWEIGHTED;
+        std::ifstream file(filename);
+        std::string temp="";
+        adjacencyMatrix.loadMatrix(file);
+        initTypes();
+    } catch(const std::exception& e){
+        throw e;
     }
 }
 
-void graph::parseLine(bool &name, std::stringstream &ss) {
-    std::string token, prev;
-    ss >> token;
-    while (token.back() != ';') {
-        if (name) {
-            namesOfNode.insert(std::make_pair(token, namesOfNode.size()));
-            adjacencyMatrix(namesOfNode[token],namesOfNode[prev])=1;
-            prev=token;
-        } else if ((token == "->" && typeDirection == TypeGraphByDirection::DIRECTED) ||
-                   (token == "--" && typeDirection == TypeGraphByDirection::UNDIRECRED)) {
+void graph::initTypes(){
+    for(int i=0;i<adjacencyMatrix.size();++i){
+        for(int j=0;j<adjacencyMatrix.size();++j){
+            if(adjacencyMatrix(i,j)!=adjacencyMatrix(j,i))
+                typeDirection=TypeGraphByDirection::DIRECTED;
+            if(adjacencyMatrix(i,j)>1)
+                typeWeights=TypeGraphByWeights::WEIGHTED;
         }
-        name = !name;
     }
 }
 
-void graph::getTypeByDirectionAndName(std::ifstream &file) {
-    std::string temp;
-    file >> temp;
-    if (temp == "graph")
-        typeDirection = TypeGraphByDirection::UNDIRECRED;
-    else if (temp == "digraph")
-        typeDirection = TypeGraphByDirection::DIRECTED;
-    else
-        throw std::invalid_argument(temp + " - undefined words");
-    file >> name >> temp;
-    if (temp != "{") throw std::invalid_argument("symbol '{' not founded");
-}
 
 void graph::exportGraphToDot(std::string filename) {
     std::ofstream file(filename);
@@ -70,9 +52,9 @@ void graph::exportGraphToDot(std::string filename) {
 void graph::printInfoAboutEdge(int firstNode, int secondNode, std::ofstream &file,const std::string& EdgesInFile,const Matrix& temp) {
     std::string first = std::to_string(firstNode);
     std::string second = std::to_string(secondNode);
-    std::string weight = (typeWeights == TypeGraphByWeights::WEIGHTED) ? std::to_string(temp(i, j)) : "";
-    if (temp(i, j) != 0) {
-        if (temp(i, j) > 0) {
+    std::string weight = (typeWeights == TypeGraphByWeights::WEIGHTED) ? std::to_string(temp(firstNode-1, secondNode-1)) : "";
+    if (temp(firstNode-1, secondNode-1) != 0) {
+        if (temp(firstNode-1, secondNode-1) > 0) {
             file << "\t" << first << " " << EdgesInFile << " " << second << " [" << std::endl;
         } else {
             file << "\t" << second << " " << EdgesInFile << " " << first << " [" << std::endl;

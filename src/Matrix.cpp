@@ -56,4 +56,25 @@ const Matrix& Matrix::operator=(const Matrix& other) {
     return other;
 }
 
+
+void Matrix::loadMatrix(std::ifstream& file)
+{
+    std::string temp="";
+    file>>temp;
+    if(isdigit(temp[0])&&temp[0]!='-')
+        _size=std::stoi(temp);
+    else 
+        throw std::invalid_argument("");
+    for(int i=0;i<_size;i++){
+        for(int j=0;j<_size;j++){
+            file>>temp;
+            if(isdigit(temp[0])&&temp[0]!='-')
+                matrixData[i][j]=std::stod(temp);
+            else 
+                throw std::invalid_argument("");
+        }
+    }
+}
+
+
 }  // namespace s21
