@@ -9,11 +9,10 @@ stack<T>::stack(stack&& other)
     std::swap(topElem,other.topElem);
 }
 
-
 template<typename T>
 stack<T>::stack(const stack& other)
 {
-    
+    *this=other;
 }
 
 template<typename T>
@@ -63,6 +62,18 @@ stack<T>& stack<T>::operator=(const stack<T>& other) {
         push(data);
     }
     return *this;
+}
+
+
+template<typename T>
+void stack<T>::freeData()
+{
+    Node<T>* node=nullptr;
+    while(topElem){
+        Node<T>* node=topElem->next;
+        delete topElem;
+        topElem=node;
+    }
 }
 
 
