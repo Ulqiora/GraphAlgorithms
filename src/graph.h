@@ -22,7 +22,6 @@ private:
     Matrix adjacencyMatrix;
     TypeGraphByDirection  typeDirection;
     TypeGraphByWeights typeWeights;
-    std::map<std::string,int> namesOfNode;
     void initTypes();
     void printInfoAboutEdge(int firstNode, int secondNode, std::ofstream &file,const std::string& EdgesInFile,const Matrix& temp);
 public:
