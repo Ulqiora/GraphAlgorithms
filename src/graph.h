@@ -2,9 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <map>
 #include <iostream>
-#include <algorithm>
 namespace s21{
 enum class TypeGraphByDirection{
     UNDIRECRED=0,
@@ -16,7 +14,7 @@ enum class TypeGraphByWeights{
     WEIGHTED
 };
 
-class graph{
+class Graph{
 private:
     std::string name;
     Matrix adjacencyMatrix;
@@ -25,9 +23,11 @@ private:
     void initTypes();
     void printInfoAboutEdge(int firstNode, int secondNode, std::ofstream &file,const std::string& EdgesInFile,const Matrix& temp);
 public:
-    graph(){}
+    Graph(){}
     void loadGraphFromFile(std::string filename);
     void exportGraphToDot(std::string filename);
+    int size(){return adjacencyMatrix.size();}
+    double operator()(int i,int j){return adjacencyMatrix(i,j);}
 };
 
 }
