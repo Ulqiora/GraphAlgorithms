@@ -18,9 +18,10 @@ class Matrix {
     Matrix(const Matrix& other);
     double& operator()(int i, int j) const { return matrixData[i][j]; }
     ~Matrix() { freeMemory(); }
-    int size() { return _size; }
+    int size() const { return _size; }
     const Matrix& operator=(const Matrix& other);
     void setSize(int newNumOfRows);
     void loadMatrix(std::ifstream& file);
+    void setValueForAll(double value);
 };
 }  // namespace s21

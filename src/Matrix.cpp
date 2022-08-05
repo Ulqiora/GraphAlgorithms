@@ -22,7 +22,7 @@ Matrix::Matrix() {
 Matrix::Matrix(const Matrix& other) : _size(other._size) { copyMatrixData(other); }
 
 Matrix::Matrix(int newSize) : _size(newSize),matrixData(nullptr) {
-    if (_size<1) throw std::exception("alo");
+    if (_size<1) throw std::invalid_argument("alo");
     allocateMemory();
 }
 
@@ -72,6 +72,15 @@ void Matrix::loadMatrix(std::ifstream& file)
                 matrixData[i][j]=std::stod(temp);
             else 
                 throw std::invalid_argument("");
+        }
+    }
+}
+
+void Matrix::setValueForAll(double value)
+{
+    for(int i=0;i<_size;++i){
+        for(int j=0;j<_size;++j){
+            matrixData[i][j]=value;
         }
     }
 }

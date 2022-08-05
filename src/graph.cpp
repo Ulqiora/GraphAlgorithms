@@ -5,6 +5,7 @@ void Graph::loadGraphFromFile(std::string filename) {
     try {
         typeDirection = TypeGraphByDirection::UNDIRECRED;
         typeWeights = TypeGraphByWeights::UNWEIGHTED;
+        positiveWeights = true;
         std::ifstream file(filename);
         std::string temp = "";
         adjacencyMatrix.loadMatrix(file);
@@ -19,7 +20,8 @@ void Graph::initTypes() {
         for (int j = 0; j < adjacencyMatrix.size(); ++j) {
             if (adjacencyMatrix(i, j) != adjacencyMatrix(j, i))
                 typeDirection = TypeGraphByDirection::DIRECTED;
-            if (adjacencyMatrix(i, j) > 1) typeWeights = TypeGraphByWeights::WEIGHTED;
+            if (adjacencyMatrix(i, j) != 1) typeWeights = TypeGraphByWeights::WEIGHTED;
+            if (adjacencyMatrix(i, j) > 0) positiveWeights = false;
         }
     }
 }

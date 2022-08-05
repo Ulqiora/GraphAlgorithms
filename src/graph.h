@@ -20,14 +20,18 @@ private:
     Matrix adjacencyMatrix;
     TypeGraphByDirection  typeDirection;
     TypeGraphByWeights typeWeights;
+    bool positiveWeights=true;
     void initTypes();
     void printInfoAboutEdge(int firstNode, int secondNode, std::ofstream &file,const std::string& EdgesInFile,const Matrix& temp);
 public:
     Graph(){}
     void loadGraphFromFile(std::string filename);
     void exportGraphToDot(std::string filename);
-    int size(){return adjacencyMatrix.size();}
-    double operator()(int i,int j){return adjacencyMatrix(i,j);}
+    int size() const {return adjacencyMatrix.size();}
+    double operator()(int i,int j) const {return adjacencyMatrix(i,j);}
+    TypeGraphByDirection getTypeByDirection(){ return typeDirection;}
+    TypeGraphByWeights getTypeByWeights(){ return typeWeights;}
+    bool hasNegativeWeights(){return !positiveWeights;}
 };
 
 }
