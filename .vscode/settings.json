@@ -90,6 +90,7 @@
         "__functional_03": "cpp",
         "filesystem": "cpp",
         "__tree": "cpp",
-        "memory_resource": "cpp"
+        "memory_resource": "cpp",
+        "list": "cpp"
     }
 }
