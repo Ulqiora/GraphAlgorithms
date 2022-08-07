@@ -11,7 +11,8 @@ std::vector<int> GraphAlgorithm::depthFirstSearch(Graph &graph,
   do {
     currenctIndex = stackForAlgorithm.top();
     for (int i = 0; i < graph.size(); ++i) {
-      if (!visitedVertex[i] && graph(i, currenctIndex))
+      if (!visitedVertex[i] && std::fabs(graph(i, currenctIndex)) >
+                                   std::numeric_limits<double>::epsilon())
         stackForAlgorithm.push(i);
     }
     if (!stackForAlgorithm.empty()) {
@@ -33,7 +34,8 @@ std::vector<int> GraphAlgorithm::breadthFirstSearch(Graph &graph,
   do {
     currenctIndex = queueForAlgorithm.top();
     for (int i = 0; i < graph.size(); ++i) {
-      if (!visitedVertex[i] && graph(i, currenctIndex))
+      if (!visitedVertex[i] && std::fabs(graph(i, currenctIndex)) >
+                                   std::numeric_limits<double>::epsilon())
         queueForAlgorithm.push(i);
     }
     if (!queueForAlgorithm.empty()) {
@@ -46,8 +48,9 @@ std::vector<int> GraphAlgorithm::breadthFirstSearch(Graph &graph,
   return result;
 }
 
-std::vector<int> GraphAlgorithm::getShortestPathBetweenVertices(Graph &graph,
-                                                                int vertex1,
-                                                                int vertex2) {}
+// std::vector<int> GraphAlgorithm::getShortestPathBetweenVertices(Graph &graph,
+//                                                                 int vertex1,
+//                                                                 int vertex2)
+//                                                                 {}
 
 }  // namespace s21
