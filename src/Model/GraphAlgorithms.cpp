@@ -7,12 +7,15 @@ std::vector<int> GraphAlgorithm::depthFirstSearch(Graph &graph,
   std::vector<bool> visitedVertex(graph.size(), false);
   std::vector<int> result(1, startVertex);
   visitedVertex[startVertex - 1] = true;
-  int currenctIndex;
+  int currenctIndex = startVertex - 1;
   do {
-    currenctIndex = stackForAlgorithm.top();
     for (int i = 0; i < graph.size(); ++i) {
-      if (!visitedVertex[i] && std::fabs(graph(i, currenctIndex)) >
-                                   std::numeric_limits<double>::epsilon())
+      std::cout << (std::fabs(graph(i, currenctIndex)) >
+                    std::numeric_limits<double>::epsilon())
+                << std::endl;
+      std::cout << (!visitedVertex[i]) << std::endl;
+      if ((!visitedVertex[i]) && (std::fabs(graph(i, currenctIndex)) >
+                                  std::numeric_limits<double>::epsilon()))
         stackForAlgorithm.push(i);
     }
     if (!stackForAlgorithm.empty()) {
@@ -58,10 +61,11 @@ int GraphAlgorithm::getShortestPathBetweenVertices
                                                               int vertex2) {
   std::vector<int> vertices;
   fillVertices(vertices, graph.size(), vertex1);
-  while (vertices.data()[vertex2] == INFINITY) {
+  // while (vertices.data()[vertex2] == std::numeric_limits<int>::infinity()) {
+  for (int i = 0; i < graph.size(); i++) {
     int minVert = findMinVertex(vertices);
-    int minDest = findMinDestination(minVert, graph.getMatrix());
-    setVertex(graph.getMatrix(), vertices, minVert, minDest);
+    int minDest = findMinDestination(minVert, graph);
+    setVertex(graph, vertices, minVert, minDest);
   }
   return vertices.data()[vertex2];
 }
@@ -71,20 +75,20 @@ void GraphAlgorithm::fillVertices(std::vector<int>& vert, int size, int vertex1)
     if (i == vertex1) {
       vert.push_back(0);
     } else {
-      vert.push_back(INFINITY);
+      vert.push_back(std::numeric_limits<int>::infinity());
     }
  }
 }
 
 int GraphAlgorithm::findMinVertex(std::vector<int>& vert) {
     int min;
-  for (int k = 0; k < vert.size(); k++) {
+  for (unsigned int k = 0; k < vert.size(); k++) {
     if (vert.data()[k] != -1) {
       min = vert.data()[k];
       break;
     }
   }
-  for (int i = 1; i < vert.size(); i++) {
+  for (unsigned int i = 1; i < vert.size(); i++) {
     if (vert.data()[i] != -1 && vert.data()[i] < min) {
       min = vert.data()[i];
     }
@@ -92,27 +96,27 @@ int GraphAlgorithm::findMinVertex(std::vector<int>& vert) {
     return min;
 }
 
-int GraphAlgorithm::findMinDestination(int minVertex, Matrix& matGraph) {
+int GraphAlgorithm::findMinDestination(int minVertex, Graph &graph) {
   int minDest;
-  for (int k = 0; k < matGraph.size(); k++) {
-    if (matGraph(minVertex, k) > 0) {
-      minDest = matGraph(minVertex, 0);
+  for (int k = 0; k < graph.size(); k++) {
+    if (graph(minVertex, k) > 0) {
+      minDest = graph(minVertex, 0);
       break;
     }
   }
   int index = 0;
-  for (int i = 1; i < matGraph.size(); i++) {
-    if (matGraph(minVertex, i) < minDest) {
-      minDest = matGraph(minVertex, i);
+  for (int i = 1; i < graph.size(); i++) {
+    if (graph(minVertex, i) < minDest) {
+      minDest = graph(minVertex, i);
       index = i;
     }
   }
   return index;
 }
 
-void GraphAlgorithm::setVertex(Matrix& matGraph, std::vector<int>& vert, int minVert, int minDest) {
-  if (vert.data()[minDest] > matGraph(minVert, minDest)) {
-    vert.data()[minDest] = matGraph(minVert, minDest);
+void GraphAlgorithm::setVertex(Graph &graph, std::vector<int>& vert, int minVert, int minDest) {
+  if (vert.data()[minDest] > graph(minVert, minDest)) {
+    vert.data()[minDest] = graph(minVert, minDest);
     vert.data()[minVert] = -1;
   }
 }

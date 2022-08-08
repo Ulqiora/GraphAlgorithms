@@ -1,5 +1,7 @@
+#include <iomanip>
 #include <iostream>
 
+#include "Model/graph.h"
 #include "Model/GraphAlgorithms.h"
 
 int main() {
@@ -15,7 +17,7 @@ int main() {
   // g1.exportGraphToDot("/Users/jcraster/GraphAlgorithms/matrices/2.dot");
   
   Graph myG;
-  myG.loadGraphFromFile("/Users/cojess/GraphAlgorithms/materials/matrices/1.txt");
+  myG.loadGraphFromFile("/Users/cojess/GraphAlgorithms/materials/matrices/18.txt");
   GraphAlgorithm algo;
   int res = algo.getShortestPathBetweenVertices(myG, 0, 17);
   std::cout << "res = " << res << std::endl;

@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <vector>
+#include <limits>
 
 //#include "SalesmanTask/TsmResult.h"
 #include "StackAndQueue/queue.h"
@@ -21,8 +22,8 @@ class GraphAlgorithm {
   private:
     void fillVertices(std::vector<int>& vert, int size, int vertex1);
     int findMinVertex(std::vector<int>& vert);
-    int findMinDestination(int minVertex, Matrix& matGraph);
-    void setVertex(Matrix& matGraph, std::vector<int>& vert, int minVert, int minDest);
+    int findMinDestination(int minVertex, Graph &graph);
+    void setVertex(Graph &graph, std::vector<int>& vert, int minVert, int minDest);
 };
 
 }  // namespace s21
