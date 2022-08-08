@@ -76,4 +76,8 @@ void Graph::printInfoAboutEdge(int firstNode, int secondNode,
   }
 }
 
+Matrix& Graph::getMatrix() {
+  return adjacencyMatrix;
+}
+
 }  // namespace s21

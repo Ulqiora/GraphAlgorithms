@@ -30,6 +30,7 @@ class Graph {
   TypeGraphByDirection getTypeByDirection() { return typeDirection; }
   TypeGraphByWeights getTypeByWeights() { return typeWeights; }
   bool hasNegativeWeights() { return !positiveWeights; }
+  Matrix& getMatrix();
 };
 
 }  // namespace s21

@@ -52,13 +52,18 @@ std::vector<int> GraphAlgorithm::breadthFirstSearch(Graph &graph,
 
 // }
 
-std::vector<int> GraphAlgorithm::getShortestPathBetweenVertices
+int GraphAlgorithm::getShortestPathBetweenVertices
                                                               (Graph &graph,
                                                               int vertex1,
                                                               int vertex2) {
-  int result = 0;
   std::vector<int> vertices;
   fillVertices(vertices, graph.size(), vertex1);
+  while (vertices.data()[vertex2] == INFINITY) {
+    int minVert = findMinVertex(vertices);
+    int minDest = findMinDestination(minVert, graph.getMatrix());
+    setVertex(graph.getMatrix(), vertices, minVert, minDest);
+  }
+  return vertices.data()[vertex2];
 }
 
 void GraphAlgorithm::fillVertices(std::vector<int>& vert, int size, int vertex1) {
@@ -72,9 +77,15 @@ void GraphAlgorithm::fillVertices(std::vector<int>& vert, int size, int vertex1)
 }
 
 int GraphAlgorithm::findMinVertex(std::vector<int>& vert) {
-  int min = vert.data()[0];
+    int min;
+  for (int k = 0; k < vert.size(); k++) {
+    if (vert.data()[k] != -1) {
+      min = vert.data()[k];
+      break;
+    }
+  }
   for (int i = 1; i < vert.size(); i++) {
-    if (vert.data()[i] < min) {
+    if (vert.data()[i] != -1 && vert.data()[i] < min) {
       min = vert.data()[i];
     }
   }
@@ -82,7 +93,13 @@ int GraphAlgorithm::findMinVertex(std::vector<int>& vert) {
 }
 
 int GraphAlgorithm::findMinDestination(int minVertex, Matrix& matGraph) {
-  int minDest = matGraph(minVertex, 0);
+  int minDest;
+  for (int k = 0; k < matGraph.size(); k++) {
+    if (matGraph(minVertex, k) > 0) {
+      minDest = matGraph(minVertex, 0);
+      break;
+    }
+  }
   int index = 0;
   for (int i = 1; i < matGraph.size(); i++) {
     if (matGraph(minVertex, i) < minDest) {
@@ -94,9 +111,20 @@ int GraphAlgorithm::findMinDestination(int minVertex, Matrix& matGraph) {
 }
 
 void GraphAlgorithm::setVertex(Matrix& matGraph, std::vector<int>& vert, int minVert, int minDest) {
-  if (vert.data()[minVert] > matGraph(minVert, minDest)) {
-    vert.data()[minVert] += matGraph(minVert, minDest);
+  if (vert.data()[minDest] > matGraph(minVert, minDest)) {
+    vert.data()[minDest] = matGraph(minVert, minDest);
+    vert.data()[minVert] = -1;
   }
 }
 
 }  // namespace s21
+
+// int main() {
+//   using namespace s21;
+//   Graph myG;
+//   myG.loadGraphFromFile("/Users/cojess/GraphAlgorithms/materials/matrices/1.txt");
+//   GraphAlgorithm algo;
+//   int res = algo.getShortestPathBetweenVertices(myG, 0, 17);
+//   std::cout << "res = " << res << std::endl;
+//   return 0;
+// }

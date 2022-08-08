@@ -24,7 +24,7 @@ all: clean Debug
 ./$(BD)%.o: */*/*/%.cpp
 	$(CC) $(CXX_FLAGS) $< -o $@
 
-Debug:$(PROJECT_FILES_OBJECTS)
+debug:$(PROJECT_FILES_OBJECTS)
 	$(CC) -g  $^ -o $@ 
 
 clean:
