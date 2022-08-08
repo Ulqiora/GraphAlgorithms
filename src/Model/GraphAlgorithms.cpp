@@ -6,21 +6,24 @@ std::vector<int> GraphAlgorithm::depthFirstSearch(Graph &graph,
   stack<int> stackForAlgorithm;
   std::vector<bool> visitedVertex(graph.size(), false);
   std::vector<int> result(1, startVertex);
+  std::cout << "Size of result:" << result.size() << '\n';
+  std::cout << "Value of first element of result:" << result.front() << '\n';
   visitedVertex[startVertex - 1] = true;
   int currenctIndex = startVertex - 1;
   do {
-    for (int i = 0; i < graph.size(); ++i) {
-      std::cout << (std::fabs(graph(i, currenctIndex)) >
-                    std::numeric_limits<double>::epsilon())
+    for (int i = graph.size() - 1; i >= 0; --i) {
+      std::cout << ((std::fabs(graph(i, currenctIndex)) >
+                     std::numeric_limits<double>::epsilon()) &&
+                    (!visitedVertex[i]))
                 << std::endl;
-      std::cout << (!visitedVertex[i]) << std::endl;
       if ((!visitedVertex[i]) && (std::fabs(graph(i, currenctIndex)) >
                                   std::numeric_limits<double>::epsilon()))
         stackForAlgorithm.push(i);
     }
     if (!stackForAlgorithm.empty()) {
       visitedVertex[stackForAlgorithm.top()] = true;
-      result.push_back(stackForAlgorithm.top());
+      result.push_back(stackForAlgorithm.top() + 1);
+      currenctIndex = stackForAlgorithm.top();
       stackForAlgorithm.pop();
     }
   } while (!stackForAlgorithm.empty());

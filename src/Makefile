@@ -8,7 +8,7 @@ ifeq ($(shell uname -s), Linux)
 	GTESTFLAGS+= -lpthread -lsubunit -lrt -lms
 endif
 #              Файлы для основного проекта
-PROJECT_FILES_SOURCES=Matrix.cpp main_debug.cpp graph.cpp
+PROJECT_FILES_SOURCES=Matrix.cpp main_debug.cpp graph.cpp GraphAlgorithms.cpp
 PROJECT_FILES_OBJECTS=$(addprefix $(BD)/,$(PROJECT_FILES_SOURCES:.cpp=.o))
 #              Файлы для тестов
 TESTS_FILES_SOURCES=Matrix.cpp main_test.cpp graph.cpp 

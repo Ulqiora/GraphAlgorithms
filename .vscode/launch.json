@@ -10,7 +10,7 @@
             "name": "debug",
             "program": "${workspaceFolder}/build/debug",
             "args": [],
-            "cwd": "${workspaceFolder}"
+            "cwd": "${workspaceFolder}/build"
         }
     ]
 }
