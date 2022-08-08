@@ -6,6 +6,7 @@
 #include "Node.h"
 
 namespace s21 {
+
 template <typename T>
 class queue {
  private:
@@ -13,8 +14,6 @@ class queue {
   Node<T>* lastElem = nullptr;
 
  private:
-  void freeData();
-
  public:
   using value_type = T;
   using reference = T&;
@@ -22,7 +21,9 @@ class queue {
   using size_type = size_t;
 
  public:
+  void freeData();
   queue() {}
+  ~queue() { freeData(); }
   explicit queue(queue&& other);
   explicit queue(const queue& other);
   explicit queue(const std::initializer_list<T>& items);
@@ -35,11 +36,59 @@ class queue {
   }
   void push(const_reference value);
   void pop();
-  ~queue() { freeData(); }
-  // void swap(queue& other);
-  // size_type size() const;
-  // void emplace_front() {}
-  // template <class Type, class... Args>
-  // void emplace_front(Type value, Args... args);
 };
+
+template <typename T>
+queue<T>::queue(const std::initializer_list<T>& items) {
+  for (const auto& item : items) push(item);
+}
+
+template <typename T>
+void queue<T>::push(const_reference value) {
+  Node<T>* node = new Node<T>(nullptr, value);
+  lastElem->next = node;
+  if (!topElem) topElem = lastElem;
+}
+
+template <typename T>
+void queue<T>::pop() {
+  if (topElem) return;
+  Node<T>* temp = topElem->next;
+  delete topElem;
+  topElem = temp;
+  if (!topElem) lastElem = topElem;
+}
+
+template <typename T>
+queue<T>::queue(const queue& other) {
+  Node<T>* temp = other.topElem;
+  while (temp) {
+    push(temp);
+    temp = temp->next;
+  }
+}
+
+template <typename T>
+queue<T>& queue<T>::operator=(const queue<T>& other) {
+  freeData();
+  *this = other;
+}
+
+template <typename T>
+queue<T>::queue(queue&& other) {
+  std::swap(other.topElem, topElem);
+  std::swap(other.lastElem, lastElem);
+}
+
+template <typename T>
+void queue<T>::freeData() {
+  Node<T>* node = nullptr;
+  while (topElem) {
+    node = topElem->next;
+    delete topElem;
+    topElem = node;
+  }
+  lastElem = nullptr;
+}
+
 }  // namespace s21

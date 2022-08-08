@@ -67,14 +67,14 @@ void Matrix::loadMatrix(std::ifstream& file) {
   if (isdigit(temp[0]) && temp[0] != '-')
     setSize(std::stoi(temp));
   else
-    throw std::invalid_argument("");
+    throw std::invalid_argument(" fdsafdsfasfas");
   for (int i = 0; i < _size; i++) {
     for (int j = 0; j < _size; j++) {
       file >> temp;
-      if (isdigit(temp[0]) && temp[0] != '-')
+      if (isdigit(temp[0]))
         matrixData[i][j] = std::stod(temp);
       else
-        throw std::invalid_argument("");
+        throw std::invalid_argument(" file error");
     }
   }
 }
@@ -85,6 +85,18 @@ void Matrix::setValueForAll(double value) {
       matrixData[i][j] = value;
     }
   }
+}
+
+bool Matrix::operator==(const Matrix& other) {
+  if (_size != other._size) return false;
+  for (int i = 0; i < _size; i++) {
+    for (int j = 0; j < _size; ++j) {
+      if (std::fabs(matrixData[i][j] - other.matrixData[i][j]) >
+          std::numeric_limits<double>::epsilon())
+        return false;
+    }
+  }
+  return true;
 }
 
 }  // namespace s21

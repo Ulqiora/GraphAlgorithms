@@ -7,10 +7,11 @@ void Graph::loadGraphFromFile(std::string filename) {
     typeWeights = TypeGraphByWeights::UNWEIGHTED;
     positiveWeights = true;
     std::ifstream file(filename);
+    if (!file.is_open()) throw std::invalid_argument("File can't be opened");
     adjacencyMatrix.loadMatrix(file);
     initTypes();
-  } catch (const std::exception& e) {
-    throw e;
+  } catch (std::exception& e) {
+    throw;
   }
 }
 
@@ -23,7 +24,7 @@ void Graph::initTypes() {
       if (std::fabs(adjacencyMatrix(i, j) - 1) >
           std::numeric_limits<double>::epsilon())
         typeWeights = TypeGraphByWeights::WEIGHTED;
-      if (adjacencyMatrix(i, j) > 0) positiveWeights = false;
+      if (adjacencyMatrix(i, j) < 0) positiveWeights = false;
     }
   }
 }

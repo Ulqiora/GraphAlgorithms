@@ -7,12 +7,15 @@ std::vector<int> GraphAlgorithm::depthFirstSearch(Graph &graph,
   std::vector<bool> visitedVertex(graph.size(), false);
   std::vector<int> result(1, startVertex);
   visitedVertex[startVertex - 1] = true;
-  int currenctIndex;
+  int currenctIndex = startVertex - 1;
   do {
-    currenctIndex = stackForAlgorithm.top();
     for (int i = 0; i < graph.size(); ++i) {
-      if (!visitedVertex[i] && std::fabs(graph(i, currenctIndex)) >
-                                   std::numeric_limits<double>::epsilon())
+      std::cout << (std::fabs(graph(i, currenctIndex)) >
+                    std::numeric_limits<double>::epsilon())
+                << std::endl;
+      std::cout << (!visitedVertex[i]) << std::endl;
+      if ((!visitedVertex[i]) && (std::fabs(graph(i, currenctIndex)) >
+                                  std::numeric_limits<double>::epsilon()))
         stackForAlgorithm.push(i);
     }
     if (!stackForAlgorithm.empty()) {

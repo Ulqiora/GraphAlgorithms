@@ -23,13 +23,18 @@ class Graph {
 
  public:
   Graph() {}
+  Graph(int size) : adjacencyMatrix(size) {}
   void loadGraphFromFile(std::string filename);
   void exportGraphToDot(std::string filename);
   int size() const { return adjacencyMatrix.size(); }
   double operator()(int i, int j) const { return adjacencyMatrix(i, j); }
+  void setValue(int i, int j, double value) { adjacencyMatrix(i, j) = value; }
   TypeGraphByDirection getTypeByDirection() { return typeDirection; }
   TypeGraphByWeights getTypeByWeights() { return typeWeights; }
   bool hasNegativeWeights() { return !positiveWeights; }
+  bool operator==(const Graph& other) {
+    return adjacencyMatrix == other.adjacencyMatrix;
+  }
 };
 
 }  // namespace s21

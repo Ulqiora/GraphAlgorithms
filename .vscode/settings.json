@@ -91,6 +91,9 @@
         "filesystem": "cpp",
         "__tree": "cpp",
         "memory_resource": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "any": "cpp",
+        "set": "cpp",
+        "variant": "cpp"
     }
 }

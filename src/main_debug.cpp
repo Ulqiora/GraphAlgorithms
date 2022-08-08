@@ -1,17 +1,18 @@
+#include <iomanip>
 #include <iostream>
 
-#include "Model/GraphAlgorithms.h"
+#include "Model/graph.h"
 
 int main() {
   using namespace s21;
   Graph g1;
-  g1.loadGraphFromFile("/Users/jcraster/GraphAlgorithms/matrices/1.txt");
-  for (int i = 0; i < g1.size(); i++) {
-    for (int j = 0; j < g1.size(); j++) {
-      std::cout << g1(i, j) << ' ';
-    }
-    std::cout << std::endl;
+  try {
+    Graph g1;
+    g1.loadGraphFromFile("../src/Tests/Matrices/18_fail_size.txt");
+  } catch (std::exception& e) {
+    std::cerr << e.what();
   }
-  g1.exportGraphToDot("/Users/jcraster/GraphAlgorithms/matrices/2.dot");
+  // GraphAlgorithm al;
+  // std::vector<int> result = al.depthFirstSearch(g1, 1);
   return 0;
 }
