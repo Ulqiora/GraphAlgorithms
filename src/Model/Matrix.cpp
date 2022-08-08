@@ -71,7 +71,7 @@ void Matrix::loadMatrix(std::ifstream& file) {
   for (int i = 0; i < _size; i++) {
     for (int j = 0; j < _size; j++) {
       file >> temp;
-      if (isdigit(temp[0]))
+      if (isdigit(temp[0]) || (isdigit(temp[1]) && temp[0] == '-'))
         matrixData[i][j] = std::stod(temp);
       else
         throw std::invalid_argument(" file error");

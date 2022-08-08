@@ -18,13 +18,17 @@ void Graph::loadGraphFromFile(std::string filename) {
 void Graph::initTypes() {
   for (int i = 0; i < adjacencyMatrix.size(); ++i) {
     for (int j = 0; j < adjacencyMatrix.size(); ++j) {
-      if (std::fabs(adjacencyMatrix(i, j) - adjacencyMatrix(j, i)) <
+      if (std::fabs(adjacencyMatrix(i, j) - adjacencyMatrix(j, i)) >
           std::numeric_limits<double>::epsilon())
         typeDirection = TypeGraphByDirection::DIRECTED;
-      if (std::fabs(adjacencyMatrix(i, j) - 1) >
-          std::numeric_limits<double>::epsilon())
-        typeWeights = TypeGraphByWeights::WEIGHTED;
-      if (adjacencyMatrix(i, j) < 0) positiveWeights = false;
+
+      if (std::fabs(adjacencyMatrix(i, j)) >
+          std::numeric_limits<double>::epsilon()) {
+        if ((std::fabs(adjacencyMatrix(i, j) - 1.0) >
+             std::numeric_limits<double>::epsilon()))
+          typeWeights = TypeGraphByWeights::WEIGHTED;
+      } else if (adjacencyMatrix(i, j) < 0)
+        positiveWeights = false;
     }
   }
 }

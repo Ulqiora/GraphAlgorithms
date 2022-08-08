@@ -48,3 +48,43 @@ TEST(Graph, LoadMatrices_CheckCorrectSize) {
     g1.loadGraphFromFile("../src/Tests/Matrices/18_fail_size.txt");
   });
 }
+TEST(Graph, LoadMatrices_CalcTypes1) {
+  using namespace s21;
+  Graph g1;
+  g1.loadGraphFromFile("../src/Tests/Matrices/2_undir_unwei_positive.txt");
+  ASSERT_TRUE(g1.getTypeByDirection() == TypeGraphByDirection::UNDIRECRED);
+  ASSERT_TRUE(g1.getTypeByWeights() == TypeGraphByWeights::UNWEIGHTED);
+  ASSERT_TRUE(g1.hasNegativeWeights() == false);
+}
+TEST(Graph, LoadMatrices_CalcTypes2) {
+  using namespace s21;
+  Graph g1;
+  g1.loadGraphFromFile("../src/Tests/Matrices/2_undir_weight_pos.txt");
+  ASSERT_TRUE(g1.getTypeByDirection() == TypeGraphByDirection::UNDIRECRED);
+  ASSERT_TRUE(g1.getTypeByWeights() == TypeGraphByWeights::WEIGHTED);
+  ASSERT_TRUE(g1.hasNegativeWeights() == false);
+}
+TEST(Graph, LoadMatrices_CalcTypes3) {
+  using namespace s21;
+  Graph g1;
+  g1.loadGraphFromFile("../src/Tests/Matrices/2_dir_unweight_pos.txt");
+  ASSERT_TRUE(g1.getTypeByDirection() == TypeGraphByDirection::DIRECTED);
+  ASSERT_TRUE(g1.getTypeByWeights() == TypeGraphByWeights::UNWEIGHTED);
+  ASSERT_TRUE(g1.hasNegativeWeights() == false);
+}
+TEST(Graph, LoadMatrices_CalcTypes4) {
+  using namespace s21;
+  Graph g1;
+  g1.loadGraphFromFile("../src/Tests/Matrices/2_dir_weight_pos.txt");
+  ASSERT_TRUE(g1.getTypeByDirection() == TypeGraphByDirection::DIRECTED);
+  ASSERT_TRUE(g1.getTypeByWeights() == TypeGraphByWeights::WEIGHTED);
+  ASSERT_TRUE(g1.hasNegativeWeights() == false);
+}
+TEST(Graph, LoadMatrices_CalcTypes5) {
+  using namespace s21;
+  Graph g1;
+  g1.loadGraphFromFile("../src/Tests/Matrices/2_dir_weight_neg.txt");
+  // ASSERT_TRUE(g1.getTypeByDirection() == TypeGraphByDirection::DIRECTED);
+  // ASSERT_TRUE(g1.getTypeByWeights() == TypeGraphByWeights::WEIGHTED);
+  // ASSERT_TRUE(g1.hasNegativeWeights() == true);
+}
