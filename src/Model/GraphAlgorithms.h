@@ -17,7 +17,6 @@ class GraphAlgorithm {
   void addToStack(Graph &graph, std::vector<bool> &visitedVertex,
                   stack<int> &queueForAlgorithm, int currentIndex);
   void addToResultForDepth(stack<int> &queueForAlgorithm,
-                           std::vector<bool> &visitedVertex,
                            std::vector<int> &result);
 
  public:

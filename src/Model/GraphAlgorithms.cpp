@@ -3,17 +3,18 @@ namespace s21 {
 
 std::vector<int> GraphAlgorithm::depthFirstSearch(Graph &graph,
                                                   int startVertex) {
+  int currentIndex = startVertex - 1;
   stack<int> stackForAlgorithm;
   std::vector<bool> visitedVertex(graph.size(), false);
   std::vector<int> result(1, startVertex);
   visitedVertex[startVertex - 1] = true;
-  int currentIndex = startVertex - 1;
-  do {
-    addToStack(graph, visitedVertex, stackForAlgorithm, currentIndex);
-    addToResultForDepth(stackForAlgorithm, visitedVertex, result);
+  stackForAlgorithm.push(currentIndex);
+  while (!stackForAlgorithm.empty()) {
     currentIndex = stackForAlgorithm.top();
     stackForAlgorithm.pop();
-  } while (!stackForAlgorithm.empty());
+    addToStack(graph, visitedVertex, stackForAlgorithm, currentIndex);
+    addToResultForDepth(stackForAlgorithm, result);
+  }
   return result;
 }
 
@@ -22,18 +23,16 @@ void GraphAlgorithm::addToStack(Graph &graph, std::vector<bool> &visitedVertex,
                                 int currentIndex) {
   for (int i = graph.size() - 1; i >= 0; --i) {
     if ((!visitedVertex[i]) && (std::fabs(graph(i, currentIndex)) >
-                                std::numeric_limits<double>::epsilon()))
+                                std::numeric_limits<double>::epsilon())) {
       stackForAlgorithm.push(i);
+      visitedVertex[i] = true;
+    }
   }
 }
 
 void GraphAlgorithm::addToResultForDepth(stack<int> &stackForAlgorithm,
-                                         std::vector<bool> &visitedVertex,
                                          std::vector<int> &result) {
-  if (!stackForAlgorithm.empty()) {
-    visitedVertex[stackForAlgorithm.top()] = true;
-    result.push_back(stackForAlgorithm.top() + 1);
-  }
+  if (!stackForAlgorithm.empty()) result.push_back(stackForAlgorithm.top() + 1);
 }
 
 std::vector<int> GraphAlgorithm::breadthFirstSearch(Graph &graph,

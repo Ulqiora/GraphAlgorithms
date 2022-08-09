@@ -6,7 +6,7 @@
 int main() {
   using namespace s21;
   Graph g1;
-  g1.loadGraphFromFile("../materials/matrices/5.txt");
+  g1.loadGraphFromFile("../materials/matrices/4.txt");
   // std::cout << "Type by direction:"
   //           << (static_cast<int>(g1.getTypeByDirection()) == 0 ?
   //           "UNDIRECTION"
