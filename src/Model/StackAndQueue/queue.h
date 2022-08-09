@@ -31,7 +31,7 @@ class queue {
   queue& operator=(queue&& other);
   bool empty() const { return !topElem; }
   const_reference top() const {
-    if (topElem) throw std::invalid_argument("This queue is empty!");
+    if (!topElem) throw std::invalid_argument("This queue is empty!");
     return topElem->data;
   }
   void push(const_reference value);
@@ -46,17 +46,21 @@ queue<T>::queue(const std::initializer_list<T>& items) {
 template <typename T>
 void queue<T>::push(const_reference value) {
   Node<T>* node = new Node<T>(nullptr, value);
-  lastElem->next = node;
-  if (!topElem) topElem = lastElem;
+  if (lastElem) {
+    lastElem->next = node;
+    lastElem = node;
+  } else {
+    topElem = lastElem = node;
+  }
 }
 
 template <typename T>
 void queue<T>::pop() {
-  if (topElem) return;
+  if (empty()) return;
   Node<T>* temp = topElem->next;
   delete topElem;
   topElem = temp;
-  if (!topElem) lastElem = topElem;
+  if (empty()) lastElem = topElem;
 }
 
 template <typename T>

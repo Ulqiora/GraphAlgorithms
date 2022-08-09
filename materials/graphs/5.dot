@@ -1,0 +1,22 @@
+graph {
+	1 -- 2 [
+		label = ""
+		weight = ""
+	];
+	1 -- 3 [
+		label = ""
+		weight = ""
+	];
+	1 -- 4 [
+		label = ""
+		weight = ""
+	];
+	2 -- 3 [
+		label = ""
+		weight = ""
+	];
+	3 -- 5 [
+		label = ""
+		weight = ""
+	];
+}

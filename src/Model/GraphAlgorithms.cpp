@@ -6,57 +6,76 @@ std::vector<int> GraphAlgorithm::depthFirstSearch(Graph &graph,
   stack<int> stackForAlgorithm;
   std::vector<bool> visitedVertex(graph.size(), false);
   std::vector<int> result(1, startVertex);
-  std::cout << "Size of result:" << result.size() << '\n';
-  std::cout << "Value of first element of result:" << result.front() << '\n';
   visitedVertex[startVertex - 1] = true;
-  int currenctIndex = startVertex - 1;
+  int currentIndex = startVertex - 1;
   do {
-    for (int i = graph.size() - 1; i >= 0; --i) {
-      std::cout << ((std::fabs(graph(i, currenctIndex)) >
-                     std::numeric_limits<double>::epsilon()) &&
-                    (!visitedVertex[i]))
-                << std::endl;
-      if ((!visitedVertex[i]) && (std::fabs(graph(i, currenctIndex)) >
-                                  std::numeric_limits<double>::epsilon()))
-        stackForAlgorithm.push(i);
-    }
-    if (!stackForAlgorithm.empty()) {
-      visitedVertex[stackForAlgorithm.top()] = true;
-      result.push_back(stackForAlgorithm.top() + 1);
-      currenctIndex = stackForAlgorithm.top();
-      stackForAlgorithm.pop();
-    }
+    addToStack(graph, visitedVertex, stackForAlgorithm, currentIndex);
+    addToResultForDepth(stackForAlgorithm, visitedVertex, result);
+    currentIndex = stackForAlgorithm.top();
+    stackForAlgorithm.pop();
   } while (!stackForAlgorithm.empty());
   return result;
 }
 
+void GraphAlgorithm::addToStack(Graph &graph, std::vector<bool> &visitedVertex,
+                                stack<int> &stackForAlgorithm,
+                                int currentIndex) {
+  for (int i = graph.size() - 1; i >= 0; --i) {
+    if ((!visitedVertex[i]) && (std::fabs(graph(i, currentIndex)) >
+                                std::numeric_limits<double>::epsilon()))
+      stackForAlgorithm.push(i);
+  }
+}
+
+void GraphAlgorithm::addToResultForDepth(stack<int> &stackForAlgorithm,
+                                         std::vector<bool> &visitedVertex,
+                                         std::vector<int> &result) {
+  if (!stackForAlgorithm.empty()) {
+    visitedVertex[stackForAlgorithm.top()] = true;
+    result.push_back(stackForAlgorithm.top() + 1);
+  }
+}
+
 std::vector<int> GraphAlgorithm::breadthFirstSearch(Graph &graph,
                                                     int startVertex) {
+  int currentIndex = startVertex - 1;
   queue<int> queueForAlgorithm;
   std::vector<bool> visitedVertex(graph.size(), false);
-  std::vector<int> result(1, startVertex);
-  visitedVertex[startVertex - 1] = true;
-  int currenctIndex;
-  do {
-    currenctIndex = queueForAlgorithm.top();
-    for (int i = 0; i < graph.size(); ++i) {
-      if (!visitedVertex[i] && std::fabs(graph(i, currenctIndex)) >
-                                   std::numeric_limits<double>::epsilon())
-        queueForAlgorithm.push(i);
-    }
-    if (!queueForAlgorithm.empty()) {
-      visitedVertex[queueForAlgorithm.top()] = true;
-      result.push_back(queueForAlgorithm.top());
-      queueForAlgorithm.pop();
-    }
-
-  } while (!queueForAlgorithm.empty());
+  std::vector<int> result(0);
+  result.push_back(startVertex);
+  visitedVertex[currentIndex] = true;
+  queueForAlgorithm.push(currentIndex);
+  while (!queueForAlgorithm.empty()) {
+    currentIndex = queueForAlgorithm.top();
+    queueForAlgorithm.pop();
+    std::cout << "current index:" << currentIndex << std::endl;
+    addToQueue(graph, visitedVertex, queueForAlgorithm, currentIndex);
+    addToResultForBreadth(queueForAlgorithm, result);
+  }
   return result;
 }
 
-// std::vector<int> GraphAlgorithm::getShortestPathBetweenVertices(Graph &graph,
-//                                                                 int vertex1,
-//                                                                 int vertex2)
-//                                                                 {}
+void GraphAlgorithm::addToQueue(Graph &graph, std::vector<bool> &visitedVertex,
+                                queue<int> &queueForAlgorithm,
+                                int currentIndex) {
+  for (int i = 0; i < graph.size(); ++i) {
+    if ((!visitedVertex[i]) && std::fabs(graph(currentIndex, i)) >
+                                   std::numeric_limits<double>::epsilon()) {
+      queueForAlgorithm.push(i);
+      visitedVertex[i] = true;
+      std::cout << i << '\n';
+    }
+  }
+}
+
+void GraphAlgorithm::addToResultForBreadth(queue<int> &queueForAlgorithm,
+                                           std::vector<int> &result) {
+  if (!queueForAlgorithm.empty()) result.push_back(queueForAlgorithm.top() + 1);
+  std::cout << "current return: ";
+  for (auto &i : result) {
+    std::cout << i << ' ';
+  }
+  std::cout << std::endl;
+}
 
 }  // namespace s21

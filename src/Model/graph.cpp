@@ -48,7 +48,8 @@ void Graph::exportGraphToDot(std::string filename) {
   Matrix temp = adjacencyMatrix;
   int sizeMatrix = adjacencyMatrix.size();
   for (int i = 0; i < sizeMatrix; i++) {
-    for (int j = 0; j < sizeMatrix; j++) {
+    for (int j = (typeDirection == TypeGraphByDirection::UNDIRECRED ? i : 0);
+         j < sizeMatrix; j++) {
       printInfoAboutEdge(i + 1, j + 1, file, EdgesInFile, temp);
     }
   }

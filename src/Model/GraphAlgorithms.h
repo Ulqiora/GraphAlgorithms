@@ -9,6 +9,17 @@
 namespace s21 {
 
 class GraphAlgorithm {
+ private:
+  void addToQueue(Graph &graph, std::vector<bool> &visitedVertex,
+                  queue<int> &queueForAlgorithm, int currentIndex);
+  void addToResultForBreadth(queue<int> &queueForAlgorithm,
+                             std::vector<int> &result);
+  void addToStack(Graph &graph, std::vector<bool> &visitedVertex,
+                  stack<int> &queueForAlgorithm, int currentIndex);
+  void addToResultForDepth(stack<int> &queueForAlgorithm,
+                           std::vector<bool> &visitedVertex,
+                           std::vector<int> &result);
+
  public:
   std::vector<int> depthFirstSearch(Graph &graph, int startVertex);
   std::vector<int> breadthFirstSearch(Graph &graph, int startVertex);
