@@ -75,38 +75,43 @@ void GraphAlgorithm::fillVertices(std::vector<int>& vert, int size, int vertex1)
     if (i == vertex1) {
       vert.push_back(0);
     } else {
-      vert.push_back(std::numeric_limits<int>::infinity());
+      // vert.push_back(std::numeric_limits<int>::infinity());
+      vert.push_back(9999);
     }
  }
 }
 
 int GraphAlgorithm::findMinVertex(std::vector<int>& vert) {
     int min;
+    int index;
   for (unsigned int k = 0; k < vert.size(); k++) {
     if (vert.data()[k] != -1) {
+      index = k;
       min = vert.data()[k];
       break;
     }
   }
   for (unsigned int i = 1; i < vert.size(); i++) {
     if (vert.data()[i] != -1 && vert.data()[i] < min) {
+      index = i;
       min = vert.data()[i];
     }
   }
-    return min;
+    return index;
 }
 
 int GraphAlgorithm::findMinDestination(int minVertex, Graph &graph) {
   int minDest;
+  int index;
   for (int k = 0; k < graph.size(); k++) {
     if (graph(minVertex, k) > 0) {
-      minDest = graph(minVertex, 0);
+      index = k;
+      minDest = graph(minVertex, k);
       break;
     }
   }
-  int index = 0;
   for (int i = 1; i < graph.size(); i++) {
-    if (graph(minVertex, i) < minDest) {
+    if (graph(minVertex, i) > 0 && graph(minVertex, i) < minDest) {
       minDest = graph(minVertex, i);
       index = i;
     }
