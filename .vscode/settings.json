@@ -94,6 +94,8 @@
         "list": "cpp",
         "any": "cpp",
         "set": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp"
     }
 }

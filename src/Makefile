@@ -5,13 +5,13 @@ LCOVFLAGS=-fprofile-arcs -ftest-coverage
 GTESTFLAGS=-lgtest
 
 ifeq ($(shell uname -s), Linux)
-	GTESTFLAGS+= -lpthread -lsubunit -lrt -lms
+	GTESTFLAGS+= -lpthread -lrt
 endif
 #              Файлы для основного проекта
 PROJECT_FILES_SOURCES=Matrix.cpp main_debug.cpp graph.cpp GraphAlgorithms.cpp
 PROJECT_FILES_OBJECTS=$(addprefix $(BD)/,$(PROJECT_FILES_SOURCES:.cpp=.o))
 #              Файлы для тестов
-TESTS_FILES_SOURCES=Matrix.cpp main_test.cpp graph.cpp 
+TESTS_FILES_SOURCES=Matrix.cpp main_test.cpp graph.cpp GraphAlgorithms.cpp
 TESTS_FILES_OBJECTS=$(addprefix $(BD)/,$(TESTS_FILES_SOURCES:.cpp=.o))
 
 all: clean Debug
