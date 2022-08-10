@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <vector>
 #include <limits>
+#include <stack>
 
 //#include "SalesmanTask/TsmResult.h"
 #include "StackAndQueue/queue.h"
@@ -10,6 +11,16 @@
 namespace s21 {
 
 class GraphAlgorithm {
+ private:
+  void addToQueue(Graph &graph, std::vector<bool> &visitedVertex,
+                  queue<int> &queueForAlgorithm, int currentIndex);
+  void addToResultForBreadth(queue<int> &queueForAlgorithm,
+                             std::vector<int> &result);
+  void addToStack(Graph &graph, std::vector<bool> &visitedVertex,
+                  stack<int> &queueForAlgorithm, int currentIndex);
+  void addToResultForDepth(stack<int> &queueForAlgorithm,
+                           std::vector<int> &result);
+
  public:
   std::vector<int> depthFirstSearch(Graph &graph, int startVertex);
   std::vector<int> breadthFirstSearch(Graph &graph, int startVertex);
@@ -20,6 +31,8 @@ class GraphAlgorithm {
   // TsmResult solveTravelingSalesmanProblem(Graph &graph);
 
   private:
+    std::stack<int> findIndexesOfVertice(Graph &graph, int begin);
+    void setWeights(Graph& graph, std::vector<int>& weights, std::stack<int> indexes, int begin);
     void fillVertices(std::vector<int>& vert, int size, int vertex1);
     int findMinVertex(std::vector<int>& vert);
     int findMinDestination(int minVertex, Graph &graph);

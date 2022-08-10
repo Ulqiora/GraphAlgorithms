@@ -1,9 +1,0 @@
-digraph graphname {
-    aboba ;
-    b ;
-    c ;
-    d ;
-    aboba -> b ;
-    b -> c ;
-    b -> d ;
-}

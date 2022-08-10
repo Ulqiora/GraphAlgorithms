@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <iostream>
 
+#include "Model/GraphAlgorithms.h"
 #include "Model/graph.h"
 #include "Model/GraphAlgorithms.h"
 
@@ -19,15 +20,20 @@ int main() {
   Graph myG;
   myG.loadGraphFromFile("/Users/cojess/GraphAlgorithms/materials/matrices/18.txt");
   GraphAlgorithm algo;
-  // int res = algo.getShortestPathBetweenVertices(myG, 2, 9);
-  // std::cout << "res = " << res << std::endl;
-
-  std::vector<int> res = algo.depthFirstSearch(myG, 1);
-
-  for (unsigned int i = 0; i < res.size(); i++) {
-  std::cout << res.data()[i] << " ";
-  }
+  int res = algo.getShortestPathBetweenVertices(myG, 1, 9);
+  std::cout << "res = " << res << std::endl;
+  // for (unsigned int i = 0; i < res.size(); i++) {
+  // std::cout << res.data()[i] << ' ';
+  // }
   // std::cout << std::endl;
+
+  // std::stack<int> temp = algo.findIndexesOfVertice(myG, 0);
+
+  // while (!temp.empty()) {
+  //   int x = temp.top();
+  //   std::cout << x << ' ';
+  //   temp.pop();
+  // }
 
   return 0;
 }
