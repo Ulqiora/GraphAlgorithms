@@ -4,6 +4,8 @@
 #include <limits>
 #include <stack>
 
+#include <queue>
+
 //#include "SalesmanTask/TsmResult.h"
 #include "StackAndQueue/queue.h"
 #include "StackAndQueue/stack.h"
@@ -31,8 +33,9 @@ class GraphAlgorithm {
   // TsmResult solveTravelingSalesmanProblem(Graph &graph);
 
   private:
-    std::stack<int> findIndexesOfVertice(Graph &graph, int begin);
-    void setWeights(Graph& graph, std::vector<int>& weights, std::stack<int> indexes, int begin);
+    std::stack<int> findIndexesOfVertice(std::vector<bool>& isVerticeUsed, Graph &graph, int begin);
+    void fillIndexes(Graph &graph, std::vector<std::stack<int>>& indexes, int i);
+    void setWeights(std::vector<bool>& isVerticeUsed, Graph& graph, std::vector<int>& weights, std::stack<int> indexes, int begin);
     void fillVertices(std::vector<int>& vert, int size, int vertex1);
     int findMinVertex(std::vector<int>& vert);
     int findMinDestination(int minVertex, Graph &graph);

@@ -20,7 +20,7 @@ int main() {
   Graph myG;
   myG.loadGraphFromFile("/Users/cojess/GraphAlgorithms/materials/matrices/18.txt");
   GraphAlgorithm algo;
-  int res = algo.getShortestPathBetweenVertices(myG, 1, 9);
+  int res = algo.getShortestPathBetweenVertices(myG, 3, 9);
   std::cout << "res = " << res << std::endl;
   // for (unsigned int i = 0; i < res.size(); i++) {
   // std::cout << res.data()[i] << ' ';

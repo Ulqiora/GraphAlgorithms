@@ -64,31 +64,97 @@ std::vector<int> GraphAlgorithm::breadthFirstSearch(Graph &graph,
 
 // }
 
+// int GraphAlgorithm::getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2) {
+//     std::queue<int> myQueue;
+//     std::vector<bool> used(graph.size(), false);
+//     std::vector<int> minRoad(graph.size(), std::numeric_limits<int>::infinity());
+//     // Matrix matrixGraph = graph.getMatrix();
+//     minRoad[vertex1] = 0;
+//     myQueue.push(vertex1);
+//     while (!myQueue.empty()) {
+//         int value = myQueue.front();
+//         myQueue.pop();
+//         used[value] = true;
+//         for (int i = 0; i < graph.size(); i++) {
+//             int tempRoad = minRoad[value] + graph(value, i);
+//             if (graph(value, i) != 0 && used[i] == false && minRoad[i] > tempRoad) {
+//                 minRoad[i] = tempRoad;
+//                 myQueue.push(i);
+//             }
+//         }
+//     }
+//     return minRoad[vertex2];
+// }
+
 int GraphAlgorithm::getShortestPathBetweenVertices
                                                               (Graph &graph,
                                                               int vertex1,
                                                               int vertex2) {
-    int begin = vertex1 - 1;
     std::vector<int> weights;
-    try {
-      fillVertices(weights, graph.size(), begin);
-      // for (auto& k: weights) {
-      //   std::cout << k << ' ';
-      // }
-      while (weights[vertex2 - 1] >= std::numeric_limits<int>::max()) {
-        std::stack<int> indexes = findIndexesOfVertice(graph, begin);
-        int nextIndex = indexes.top();
-        setWeights(graph, weights, indexes, begin);
-        begin = nextIndex;
-        std::cout << "begin = " << begin << std::endl;
+    std::vector<bool> isVerticeUsed(graph.size(), false);
+    fillVertices(weights, graph.size(), vertex1 - 1);
+    std::vector<std::stack<int>> indexes;
+    std::stack<int> firstIndex = findIndexesOfVertice(isVerticeUsed, graph, vertex1 - 1);
+    setWeights(isVerticeUsed, graph, weights, firstIndex, vertex1 - 1);
+    indexes.push_back(firstIndex);
+    for (int i = 0; i < graph.size(); i++) {
+      // for (int j = 0; j < indexes[i].size(); j++) {
+      while (!indexes[i].empty()) {
+        // indexes[i].pop();
+        indexes.push_back(findIndexesOfVertice(isVerticeUsed, graph, indexes[i].top()));
+        setWeights(isVerticeUsed, graph, weights, indexes[i], indexes[i].top());
+        indexes[i].pop();
       }
-    } catch (std::exception& e) {
-      throw;
+
     }
     return weights[vertex2 - 1];
 }
 
-std::stack<int> GraphAlgorithm::findIndexesOfVertice(Graph &graph, int begin) {
+// НУЖНО ЗАПОМИНАТЬ ИЗ КАКОЙ ВЕРШИНЫ ИДЕТ В ТЕКУЩУЮ (ИНАЧЕ ВЕС НЕ КОРРЕКТИРУЕТСЯ, А У МЕНЯ ВЕРШИНА ПЕРЕКЛЮЧАЕТСЯ РАНЬШЕ ЧЕМ НАДО)
+void GraphAlgorithm::setWeights(std::vector<bool>& isVerticeUsed, Graph& graph, std::vector<int>& weights, std::stack<int> indexes, int begin) {
+  for (unsigned int i = 0; i < indexes.size(); i++) {
+    if (!isVerticeUsed[begin] && weights[indexes.top()] > graph(begin, indexes.top())) {
+      std::cout << "begin = " << begin << " weight = " << weights[begin] << std::endl;
+      weights[indexes.top()] = weights[begin] + graph(begin, indexes.top());
+    }
+    indexes.pop();
+  }
+    // weights[begin] = -1;
+    isVerticeUsed[begin] = true;
+}
+
+// void GraphAlgorithm::fillIndexes(Graph &graph, std::vector<std::stack<int>>& indexes, int i) {
+//   indexes.push_back(findIndexesOfVertice(graph, i));
+// }
+
+// int GraphAlgorithm::getShortestPathBetweenVertices
+//                                                               (Graph &graph,
+//                                                               int vertex1,
+//                                                               int vertex2) {
+//     int begin = vertex1 - 1;
+//     std::vector<int> weights;
+//     try {
+//       fillVertices(weights, graph.size(), begin);
+//       // for (auto& k: weights) {
+//       //   std::cout << k << ' ';
+//       // }
+//         std::stack<int> indexes = findIndexesOfVertice(graph, begin);
+//       while (weights[vertex2 - 1] >= std::numeric_limits<int>::max()) {
+//         if (!indexes.empty()) {
+//           int nextIndex = indexes.top();
+//           setWeights(graph, weights, indexes, begin);
+//           begin = nextIndex;
+//           indexes.pop();
+//           // std::cout << "begin = " << begin << std::endl;
+//         }
+//       }
+//     } catch (std::exception& e) {
+//       throw;
+//     }
+//     return weights[vertex2 - 1];
+// }
+
+std::stack<int> GraphAlgorithm::findIndexesOfVertice(std::vector<bool>& isVerticeUsed, Graph &graph, int begin) {
   std::stack<int> result;
   std::vector<int> pieceOfGraph;
   for (int k = 0; k < graph.size(); k++) {
@@ -110,26 +176,21 @@ std::stack<int> GraphAlgorithm::findIndexesOfVertice(Graph &graph, int begin) {
       break;
     }
   }
-  if (result.empty()) {
-    throw::std::out_of_range("empty stack");
-  }
-  // while (!result.empty()) {
-  //   int x = result.top();
-  //   std::cout << x << ' ';
-  //   result.pop();
+  // if (result.empty()) {
+  //   throw::std::out_of_range("empty stack");
   // }
-  // std::cout << "\n--------------";
-  return result;
-}
-
-void GraphAlgorithm::setWeights(Graph& graph, std::vector<int>& weights, std::stack<int> indexes, int begin) {
-  for (unsigned int i = 0; i < indexes.size(); i++) {
-    if (weights[indexes.top()] > graph(begin, indexes.top())) {
-      weights[indexes.top()] = weights[begin] + graph(begin, indexes.top());
+  // result.push(begin);  // DELETE ?
+  std::cout << "x = " << begin << std::endl;
+  if (!result.empty()) {
+    std::stack<int> tmp = result;
+    while (!tmp.empty()) {
+      int x = tmp.top();
+      std::cout << x << ' ';
+      tmp.pop();
     }
-    indexes.pop();
+    std::cout << "\n--------------\n";
   }
-    weights[begin] = -1;
+  return result;
 }
 
 // int GraphAlgorithm::getShortestPathBetweenVertices
@@ -154,6 +215,7 @@ void GraphAlgorithm::fillVertices(std::vector<int>& vert, int size, int vertex1)
     } else {
       vert.push_back(std::numeric_limits<int>::max());
     }
+    // std::cout << vert[i] << std::endl;
  }
 }
 
