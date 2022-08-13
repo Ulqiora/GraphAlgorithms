@@ -22,7 +22,7 @@ void GraphAlgorithm::addToStack(Graph &graph, std::vector<bool> &visitedVertex,
                                 stack<int> &stackForAlgorithm, int currentIndex) {
     for (int i = 0; i < graph.size(); ++i) {
         if ((!visitedVertex[i]) &&
-            (std::fabs(graph(currentIndex,i)) > std::numeric_limits<double>::epsilon())) {
+            (std::fabs(graph(currentIndex, i)) > std::numeric_limits<double>::epsilon())) {
             stackForAlgorithm.push(i);
             visitedVertex[i] = true;
         }
@@ -70,12 +70,12 @@ void GraphAlgorithm::addToResultForBreadth(queue<int> &queueForAlgorithm, std::v
     // std::cout << std::endl;
 }
 
-TsmResult GraphAlgorithm::solveTravelingSalesmanProblem(Graph &graph)
-{
+TsmResult GraphAlgorithm::solveTravelingSalesmanProblem(Graph &graph) {
+    if (!graph.isCompliteGraph()) throw std::invalid_argument("This graph is not complete!");
+    if (graph.hasNegativeWeights()) throw std::invalid_argument("This graph has negative weights!");
+    if (graph.size() < 2) throw std::invalid_argument("This graph is very small! Try again!");
     AntAlgorithm aa;
-    return   aa.start(&graph);
+    return aa.start(&graph);
 }
-
-
 
 }  // namespace s21
