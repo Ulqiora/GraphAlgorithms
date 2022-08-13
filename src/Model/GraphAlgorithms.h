@@ -3,6 +3,7 @@
 #include <vector>
 
 //#include "SalesmanTask/TsmResult.h"
+#include "SalesmanTask/ant algorithm/AntAlgorithm.h"
 #include "StackAndQueue/queue.h"
 #include "StackAndQueue/stack.h"
 #include "graph.h"
@@ -26,7 +27,7 @@ class GraphAlgorithm {
   //                                                 int vertex2);
   // Matrix getShortestPathsBetweenAllVertices(Graph &graph);
   // Matrix getLeastSpanningTree(Graph &graph);
-  // TsmResult solveTravelingSalesmanProblem(Graph &graph);
+  TsmResult solveTravelingSalesmanProblem(Graph &graph);
 };
 
 }  // namespace s21

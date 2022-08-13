@@ -2,12 +2,6 @@
 namespace s21 {
 
 std::vector<int> GraphAlgorithm::depthFirstSearch(Graph &graph, int startVertex) {
-    for(int i=0;i<graph.size();i++){
-      for(int j=0;j<graph.size();++j){
-        std::cout<<graph(i,j)<<' ';
-      }
-      std::cout<<std::endl;
-    }
     int currentIndex = startVertex - 1;
     stack<int> stackForAlgorithm;
     std::vector<bool> visitedVertex(graph.size(), false);
@@ -75,5 +69,13 @@ void GraphAlgorithm::addToResultForBreadth(queue<int> &queueForAlgorithm, std::v
     // }
     // std::cout << std::endl;
 }
+
+TsmResult GraphAlgorithm::solveTravelingSalesmanProblem(Graph &graph)
+{
+    AntAlgorithm aa;
+    return   aa.start(&graph);
+}
+
+
 
 }  // namespace s21

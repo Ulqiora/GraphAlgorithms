@@ -26,5 +26,7 @@ class Matrix {
   void setSize(int newNumOfRows);
   void loadMatrix(std::ifstream& file);
   void setValueForAll(double value);
+  void mul_number(const double num);
+  Matrix& operator*=(const double value);
 };
 }  // namespace s21

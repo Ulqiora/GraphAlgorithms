@@ -1,6 +1,6 @@
 CC=g++
 BD=../build
-CXX_FLAGS=-c -g -Wall -Werror -Wextra -Wfloat-equal -Warray-bounds -std=c++17
+CXX_FLAGS=-c #-g -Wall -Werror -Wextra -Wfloat-equal -Warray-bounds -std=c++17
 LCOVFLAGS=-fprofile-arcs -ftest-coverage
 GTESTFLAGS=-lgtest
 
@@ -14,14 +14,14 @@ PROJECT_FILES_OBJECTS=$(addprefix $(BD)/,$(PROJECT_FILES_SOURCES:.cpp=.o))
 TESTS_FILES_SOURCES=Matrix.cpp main_test.cpp graph.cpp GraphAlgorithms.cpp
 TESTS_FILES_OBJECTS=$(addprefix $(BD)/,$(TESTS_FILES_SOURCES:.cpp=.o))
 
-all: clean Debug
+all: clean debug
 
 ./$(BD)/%.o:%.cpp
 	$(CC) $(CXX_FLAGS) $< -o $@
 
 ./$(BD)/%.o:*/%.cpp
 	$(CC) $(CXX_FLAGS) $< -o $@
-
+ 
 ./$(BD)/%.o: */*/%.cpp
 	$(CC) $(CXX_FLAGS) $< -o $@
 
