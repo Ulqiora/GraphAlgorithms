@@ -17,7 +17,20 @@ std::vector<double>* MatrixBnB::findMinimumInAllRows() {
     std::vector<double>* result = new std::vector<double>();
     for (auto& row : data) {
         result->push_back((*std::min_element(row.begin(), row.end(), [](const Cell& t1, const Cell& t2) {
-                              return t1.second < t2.second; })).second);
+                              return t1.second < t2.second;
+                          })).second);
+    }
+    return result;
+}
+
+std::vector<double>* MatrixBnB::findMinimumInAllCols() {
+    std::vector<double>* result = new std::vector<double>();
+    for (auto& row : data) {
+        double min = row[0].second;
+        for (auto& cell : row) {
+            if (cell.second > min) min = (cell.second);
+        }
+        result->push_back(min);
     }
     return result;
 }
