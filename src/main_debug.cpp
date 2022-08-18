@@ -8,18 +8,12 @@ int main() {
     Graph g1;
     g1.loadGraphFromFile("../materials/matrices/11.txt");
     MatrixBnB res(g1);
-    std::vector<double> *out=res.findMinimumInAllRows();
-    for(auto& i:(*out)){
-      std::cout<<i<<' ';
+    res= res.createCopyWithoutEdge(0,0);
+  for(auto& row:res){
+    for(auto& cell: row){
+      std::cout<<" w = "<<cell.second<<" | ";
     }
-    delete out;
-  // std::cout<<"num of rows:"<<matrixAdj.rows()<<'\n';
-  // for(auto& row:matrixAdj){
-  //   std::cout<<"num of cols:"<<matrixAdj.cols(0)<<'\n';
-  //   for(auto& cell: row){
-  //     std::cout<<"i = "<<cell.first.row<<", j = "<<cell.first.col<<", w = "<<cell.second<<" | ";
-  //   }
-  //   std::cout<<'\n';
-  // }
+    std::cout<<'\n';
+  }
   return 0;
 }

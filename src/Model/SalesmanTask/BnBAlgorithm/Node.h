@@ -3,11 +3,6 @@
 #include "MatrixBnB.h"
 namespace s21 {
 
-
-namespace matrixBnB{
-    MatrixBnB createMatrixBnB(const Graph& other);
-}
-
 struct Node {
     MatrixBnB matrix;
     double lowerBound = 0;

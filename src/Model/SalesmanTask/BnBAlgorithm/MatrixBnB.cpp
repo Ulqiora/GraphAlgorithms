@@ -25,14 +25,58 @@ std::vector<double>* MatrixBnB::findMinimumInAllRows() {
 
 std::vector<double>* MatrixBnB::findMinimumInAllCols() {
     std::vector<double>* result = new std::vector<double>();
-    for (auto& row : data) {
-        double min = row[0].second;
-        for (auto& cell : row) {
-            if (cell.second > min) min = (cell.second);
+    for (int col = 0; col < data.size(); ++col) {
+        double min = data[0][col].second;
+        for (int row = 0; row < data.size(); ++row) {
+            if (data[row][col].second < min) min = (data[row][col].second);
         }
         result->push_back(min);
     }
     return result;
 }
+
+
+
+double MatrixBnB::reducedRowsAndCalcMinimums()
+{
+    std::vector<double>* minimums = findMinimumInAllRows();
+    int i=0;
+    for(auto& row:data){
+        for(auto& cell: row){
+            cell.second-=(*minimums)[i];
+        }
+        i++;
+    }
+    double result=0.0;
+    for(auto& min:(*minimums)) result+=min;
+    delete minimums;
+    return result;
+}
+
+double MatrixBnB::reducedColsAndCalcMinimums()
+{
+    std::vector<double>* minimums = findMinimumInAllCols();
+    for(int col=0;col<data.size();++col){
+        for(int row=0; row<data.size();++row){
+            data[row][col].second-=(*minimums)[col];
+        }
+    }
+    double result=0.0;
+    for(auto& min:(*minimums)) result+=min;
+    delete minimums;
+    return result;
+}
+
+MatrixBnB MatrixBnB::createCopyWithoutEdge(int indexFVert,int indexSVert)
+{
+    MatrixBnB result(*this);
+    for(int i=0;i<data.size();++i){
+        for(int j=0;j<data.size();++j){
+            if (i == indexFVert || j == indexSVert) result(i, j).second = numLimD::infinity();
+        }
+    }
+    return result;
+}
+
 
 }  // namespace s21
