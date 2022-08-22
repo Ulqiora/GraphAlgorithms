@@ -35,6 +35,7 @@ class queue {
     }
     void push(const_reference value);
     void pop();
+    T& front(){ return topElem->data;}
 };
 
 template <typename T>

@@ -33,17 +33,8 @@ class Graph {
     TypeGraphByWeights getTypeByWeights() { return typeWeights; }
     bool hasNegativeWeights() { return !positiveWeights; }
     bool operator==(const Graph& other) { return adjacencyMatrix == other.adjacencyMatrix; }
-    bool isCompliteGraph() {
-        for (int i = 0; i < adjacencyMatrix.size(); ++i) {
-            for (int j = i; j < adjacencyMatrix.size(); ++j) {
-                if (std::fabs(adjacencyMatrix(i, j) - adjacencyMatrix(j, i)) >
-                    std::numeric_limits<double>::epsilon()&&(adjacencyMatrix(i, j)>0)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+    bool isCompliteGraph();
+    Matrix getMatrix() { return adjacencyMatrix; }
 };
 
 }  // namespace s21
