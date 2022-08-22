@@ -9,17 +9,14 @@ private:
     MatrixBnB matrix;
     double NodeBnBCost=0;
     double lowerBound = 0;
-    std::list<NodeBnB> childrens;
+    std::vector<NodeBnB> childrens;
     std::vector<int> currentPath;
 public:
     NodeBnB(const MatrixBnB& matrixNew,int startIndex): matrix(matrixNew),currentPath(0){
         currentPath.push_back(startIndex);
         double sumMinOfRows=matrix.reducedRowsAndCalcMinimums();
-        std::cout<<"sumMinOfRows="<<sumMinOfRows<<'\n';
         double sumMinOfCols=matrix.reducedColsAndCalcMinimums();
-        std::cout<<"sumMinOfCols="<<sumMinOfCols<<'\n';
         NodeBnBCost=sumMinOfCols+sumMinOfRows;
-        std::cout<<"NodeBnBCost="<<NodeBnBCost<<'\n';
     }
     NodeBnB(const NodeBnB& NodeBnBOther, int indexFVert, int indexSVert): childrens(0) {
         if(indexFVert != NodeBnBOther.currentPath.back())
@@ -40,11 +37,8 @@ public:
         currentPath.push_back(startIndex);
         std::cout<<currentPath.back()<<'\n';
         double sumMinOfRows=matrix.reducedRowsAndCalcMinimums();
-        std::cout<<"sumMinOfRows="<<sumMinOfRows<<'\n';
         double sumMinOfCols=matrix.reducedColsAndCalcMinimums();
-        std::cout<<"sumMinOfCols="<<sumMinOfCols<<'\n';
         NodeBnBCost=sumMinOfCols+sumMinOfRows;
-        std::cout<<"NodeBnBCost="<<NodeBnBCost<<'\n';
     }
     void print()const noexcept{
         std::cout<<"lower bound="<<lowerBound<<'\n';
@@ -58,9 +52,7 @@ public:
     void createChildrens(){
         for(int i=0;i<matrix.size();++i){
             if(std::find(currentPath.begin(),currentPath.end(),i)==currentPath.end()){
-                std::cout<<"current index"<<currentPath.back()<<" to "<<i<<'\n';
                 childrens.push_back((NodeBnB((*this),currentPath.back(),i)));
-                childrens.back().print();
             }
         }
     }
@@ -71,5 +63,6 @@ public:
     void setLowerBound(double value) { lowerBound=value; }
     NodeBnB& frontChildren(){ return childrens.front();}
     std::vector<int> path() { return currentPath;}
+    NodeBnB& operator()(int i) {return childrens[i];}
 };
 }  // namespace s21
