@@ -1,19 +1,15 @@
 #include <iomanip>
 #include <iostream>
-#include "Model/SalesmanTask/BnBAlgorithm/MatrixBnB.h"
+#include "Model/SalesmanTask/BnBAlgorithm/BnBAlgorithm.h"
 // #include "Model/GraphAlgorithms.h"
 // #include "Model/graph.h"
 int main() {
     using namespace s21;
     Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/11.txt");
-    MatrixBnB res(g1);
-    res= res.createCopyWithoutEdge(0,0);
-  for(auto& row:res){
-    for(auto& cell: row){
-      std::cout<<" w = "<<cell.second<<" | ";
-    }
-    std::cout<<'\n';
-  }
+    g1.loadGraphFromFile("../materials/matrices/5_BNB.txt");
+    BnBAlgorithm bb;
+    TsmResult res=  bb.start(g1,1);
+    for(auto   i:res.vertices) std::cout<<i<<' ';
+    std::cout<<'\n'<<res.distance<<'\n';
   return 0;
 }
