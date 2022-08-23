@@ -3,7 +3,7 @@
 namespace s21 {
 
     ConsoleView::ConsoleView() {
-        printMenu();
+        runMenu();
         while (currentCommand != exit) {
             try {
                 waitForCommand();
@@ -17,10 +17,9 @@ namespace s21 {
     ConsoleView::~ConsoleView() {
     }
 
-    void ConsoleView::printMenu() {
-        for (unsigned int i = 0; i < printable.size(); i++) {
-            std::cout << printable[i];
-        }
+    void ConsoleView::runMenu() {
+        currentCommand = mainMenu;
+        runCommand();
     }
 
     void ConsoleView::waitForCommand() {
@@ -45,6 +44,9 @@ namespace s21 {
 
     void ConsoleView::runCommand() {
         switch (currentCommand) {
+            case mainMenu:
+                printMessage(mainMenu);
+                break;
             case loadGraph:
                 loadGraphMethod();
                 break;
@@ -72,13 +74,23 @@ namespace s21 {
             case exit:
                 break;
             default:
-                printMenu();
+                runMenu();
                 break;
         }
     }
 
     void ConsoleView::loadGraphMethod() {
-        std::cout << "Loading graph\n";
+        printMessage(loadGraph);
+        std::string fileName;
+        std::cin >> fileName;
+        try {
+            myGraph.loadGraphFromFile(fileName);
+            std::cout << "Graph loaded succesfully. Graph size = " << myGraph.size() << std::endl;
+        } catch (std::exception &e){
+                std::cout << e.what() << std::endl;
+        }
+        currentCommand = mainMenu;
+        runCommand();
     }
 
     void ConsoleView::createImageMethod() {
@@ -107,6 +119,12 @@ namespace s21 {
 
     void ConsoleView::salesManMethod() {
         std::cout << "Solving Salesman\n";
+    }
+
+    inline void ConsoleView::printMessage(const commandList& position) {
+        std::cout << "***" << std::endl;
+        std::cout << printable[position];
+        std::cout << "***" << std::endl;
     }
 
 }  // namespace s21

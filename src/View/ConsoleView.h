@@ -2,28 +2,15 @@
 #include <vector>
 #include <string>
 
+#include "../Model/graph.h"
+// #include "../Model/GraphAlgorithms.h"
+
 namespace s21 {
 class ConsoleView {
-    public:
-        ConsoleView();
-        ~ConsoleView();
-
     private:
-        void printMenu();
-        void waitForCommand();
-        bool isNumber(std::string entry);
-        void runCommand();
-        void loadGraphMethod();
-        void createImageMethod();
-        void breadthTraversalMethod();
-        void depthTraversalMethod();
-        void shortestTwoMethod();
-        void shortestAllMethod();
-        void spanTreeMethod();
-        void salesManMethod();
-
-    private:
-        unsigned int currentCommand = commandList::mainMenu;
+        Graph myGraph;
+        // GraphAlgorithms myAlgorithms;
+        unsigned int currentCommand = mainMenu;
 
         enum commandList {
             mainMenu = 0,
@@ -48,7 +35,34 @@ class ConsoleView {
             "6. search for the shortest paths between all pairs of vertices\n" \
             "7. search for the minimal spanning tree in the graph\n" \
             "8. solving the salesman problem\n" \
-            "9. exit\n" \
+            "9. exit\n",  // 0
+            "Enter the full path of the file\n",  // 1
+            "Enter the name of the .dot file\n",  // 2
+            "Breadth traversal result: \n",  // 3
+            "Depth traversal result: \n",  // 4
+            "Shortest path between two vertices: \n",  // 5
+            "Shortest path between all vertices: \n",  // 6
+            "Spanning tree result: \n",  // 7
+            "Salesman problem result: \n",  // 8
         };
+
+    public:
+        ConsoleView();
+        ~ConsoleView();
+
+    private:
+        void runMenu();
+        void waitForCommand();
+        bool isNumber(std::string entry);
+        void runCommand();
+        void loadGraphMethod();
+        void createImageMethod();
+        void breadthTraversalMethod();
+        void depthTraversalMethod();
+        void shortestTwoMethod();
+        void shortestAllMethod();
+        void spanTreeMethod();
+        void salesManMethod();
+        inline void printMessage(const commandList& position);
 };
 }  // namespace s21
