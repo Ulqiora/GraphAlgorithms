@@ -9,12 +9,7 @@
 #include "graph.h"
 namespace s21 {
 
-// int generateRandomValue(int minimum, int maximum) {
-//     std::random_device dev;
-//     std::mt19937 rng(dev());
-//     std::uniform_int_distribution<std::mt19937::result_type> dist(minimum, maximum);
-//     return dist(rng);
-// }
+int generateRandomValue(int minimum, int maximum);
 
 class GraphAlgorithms {
    private:

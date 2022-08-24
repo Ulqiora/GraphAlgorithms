@@ -26,8 +26,7 @@ namespace s21 {
     void ConsoleView::waitForCommand() {
         std::string entry;
         std::cin >> entry;
-        if (isNumber(entry) && entry.length() == 1) {
-            currentCommand = std::stoi(entry);
+        if (isNumber(entry) && (currentCommand = std::stoi(entry)) < 11) {
         } else {
             throw std::out_of_range("Wrong command!");
         }
@@ -71,6 +70,9 @@ namespace s21 {
                 break;
             case salesMan:
                 salesManMethod();
+                break;
+            case bonus:
+                salesManCompareMethod();
                 break;
             case exit:
                 break;
@@ -199,7 +201,49 @@ namespace s21 {
         runMenu();
     }
 
-    inline void ConsoleView::printMessage(const commandList& position) {
+    void ConsoleView::salesManCompareMethod() {
+        if (myGraph.size() > 0) {
+            std::cout << "Enter the amount of cycles:" << std::endl;
+            std::string strCycles;
+            std::cin >> strCycles;
+            if (isNumber(strCycles)) {
+                int numCycles = std::stoi(strCycles);
+                if (numCycles > 0) {
+                    printMessage(bonus);
+                    std::cout << "Ant time, ms = " << timeCompare(numCycles, antAlgo) << std::endl;
+                    std::cout << "BnB time, ms = " << timeCompare(numCycles, bnbAlgo) << std::endl;
+                    // std::cout << "BruteForce time, ms = " << timeCompare(numCycles, bruteAlgo) << std::endl;
+                } else {
+                    std::cout << "Wrong value!" << std::endl;
+                }
+            }
+        } else {
+            std::cout << "Incorrect graph!" << std::endl;
+        }
+        runMenu();
+    }
+
+    double ConsoleView::timeCompare(int numCycles, const commandList& algo) {
+        std::chrono::time_point<std::chrono::system_clock> tStart = std::chrono::system_clock::now();
+        if (algo == antAlgo) {
+            for (int i = 0; i < numCycles; i++) {
+                myAlgorithms.solveTravelingSalesmanProblem(myGraph);
+            }
+        } else if (algo == bnbAlgo) {
+            for (int i = 0; i < numCycles; i++) {
+                myAlgorithms.solveTravelingSalesmanProblemBnB(myGraph);
+            }
+        } else if (algo == bruteAlgo) {
+            for (int i = 0; i < numCycles; i++) {
+                myAlgorithms.solveTravelingSalesmanProblemBrudeForce(myGraph);
+            }
+        }
+        std::chrono::time_point<std::chrono::system_clock> tFinish = std::chrono::system_clock::now();
+
+        return std::chrono::duration_cast<std::chrono::milliseconds>(tFinish - tStart).count();
+    }
+
+    void ConsoleView::printMessage(const commandList& position) {
         std::cout << "***" << std::endl;
         std::cout << printable[position];
         std::cout << "***" << std::endl;

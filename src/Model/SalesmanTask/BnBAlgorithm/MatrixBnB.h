@@ -25,7 +25,7 @@ class MatrixBnB {
     double reducedColsAndCalcMinimums();
     MatrixBnB createCopyWithoutEdge(int indexFVert,int indexSVert)const;
     Cell& operator()(int i, int j) { return data[i][j]; }
-    const Cell operator()(int i, int j) const { return data[i][j]; }
+    Cell operator()(int i, int j) const { return data[i][j]; }
 
 };
 

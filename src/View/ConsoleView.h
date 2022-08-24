@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <chrono>
 #include "../Model/graph.h"
 #include "../Model/GraphAlgorithms.h"
 
@@ -22,8 +23,12 @@ class ConsoleView {
             shortestAll = 6,
             spanTree = 7,
             salesMan = 8,
-            exit = 9,
-            vertexNum = 10
+            bonus = 9,
+            exit = 10,
+            vertexNum = 11,
+            antAlgo = 12,
+            bnbAlgo = 13,
+            bruteAlgo = 14
         };
 
         std::vector<std::string> printable {
@@ -36,7 +41,8 @@ class ConsoleView {
             "6. search for the shortest paths between all pairs of vertices\n" \
             "7. search for the minimal spanning tree in the graph\n" \
             "8. solving the salesman problem\n" \
-            "9. exit\n",  // 0
+            "9. Bonus: Salesman compare\n" \
+            "10. exit\n",  // 0
             "Enter the full path of the file\n",  // 1
             "Enter the name of the .dot file\n",  // 2
             "Breadth traversal result: \n",  // 3
@@ -45,8 +51,9 @@ class ConsoleView {
             "Shortest path between all vertices: \n",  // 6
             "Spanning tree result: \n",  // 7
             "Salesman problem result: \n",  // 8
-            "Exit\n",  // 9
-            "Enter the number of vertex: \n",  // 10
+            "Bonus. Salesman compare: \n",  // 9
+            "Exit\n",  // 10
+            "Enter the number of vertex: \n",  // 11
         };
 
     public:
@@ -65,6 +72,8 @@ class ConsoleView {
         void shortestOrSpanningMethod(const commandList& position);
         void spanTreeMethod();
         void salesManMethod();
-        inline void printMessage(const commandList& position);
+        void printMessage(const commandList& position);
+        void salesManCompareMethod();
+        double timeCompare(int numCycles, const commandList& algo);
 };
 }  // namespace s21

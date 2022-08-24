@@ -1,6 +1,13 @@
 #include "GraphAlgorithms.h"
 namespace s21 {
 
+int generateRandomValue(int minimum, int maximum) {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist(minimum, maximum);
+    return dist(rng);
+}
+
 std::vector<int> GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
     int currentIndex = startVertex - 1;
     stack<int> stackForAlgorithm;
@@ -88,7 +95,7 @@ Matrix GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
     size_t size = graph.size();
     std::set<int> visitedVertices;
     std::vector<std::pair<int, int>> traveledEdges;
-    // visitedVertices.insert(generateRandomValue(0, size - 1));
+    visitedVertices.insert(generateRandomValue(0, size - 1));
     while (visitedVertices.size() < size) {
         int minWeight = std::numeric_limits<int>::infinity(), to = 0, from = 0;
         for (auto i : visitedVertices) {

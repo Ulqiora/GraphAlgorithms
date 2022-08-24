@@ -20,7 +20,6 @@ std::vector<double>* MatrixBnB::findMinimumInAllRows() {
         for (int i = 0; i < data.size(); ++i) {
             if (row[i] < min){ min = row[i];
             }
-            // std::cout << i << "=" << min << '\n';
         }
         min=(min==numLimD::infinity()?0:min);
         result->push_back(min);

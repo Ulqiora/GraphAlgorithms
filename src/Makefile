@@ -17,9 +17,6 @@ PROJECT_FILES_OBJECTS=$(addprefix $(BD)/,$(PROJECT_FILES_SOURCES:.cpp=.o))
 
 all: clean debug
 
-view:
-	g++ View/ConsoleView.cpp Model/graph.cpp Model/Matrix.cpp Model/GraphAlgorithms.cpp Model/SalesmanTask/AntAlgorithm/AntAlgorithm.cpp Model/SalesmanTask/BnBAlgorithm/BnBAlgorithm.cpp -o viewtest
-
 ./$(BD)/%.o:%.cpp
 	$(CC) $(CXX_FLAGS) $< -o $@
 

@@ -36,7 +36,6 @@ public:
     NodeBnB()=default;
     NodeBnB(const Graph& graph,int startIndex):matrix(graph){
         currentPath.push_back(startIndex);
-        std::cout<<currentPath.back()<<'\n';
         double sumMinOfRows=matrix.reducedRowsAndCalcMinimums();
         double sumMinOfCols=matrix.reducedColsAndCalcMinimums();
         NodeBnBCost=sumMinOfCols+sumMinOfRows;
