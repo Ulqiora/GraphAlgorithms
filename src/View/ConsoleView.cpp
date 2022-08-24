@@ -6,6 +6,10 @@ namespace s21 {
         runMenu();
         while (currentCommand != exit) {
             try {
+                if (std::cin.eof()) {
+                    std::cout << "^D" << std::endl;
+                    break;
+                }
                 waitForCommand();
                 runCommand();
             } catch (std::exception &e){
@@ -212,7 +216,7 @@ namespace s21 {
                     printMessage(bonus);
                     std::cout << "Ant time, ms = " << timeCompare(numCycles, antAlgo) << std::endl;
                     std::cout << "BnB time, ms = " << timeCompare(numCycles, bnbAlgo) << std::endl;
-                    // std::cout << "BruteForce time, ms = " << timeCompare(numCycles, bruteAlgo) << std::endl;
+                    std::cout << "BruteForce time, ms = " << timeCompare(numCycles, bruteAlgo) << std::endl;
                 } else {
                     std::cout << "Wrong value!" << std::endl;
                 }
