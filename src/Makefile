@@ -9,13 +9,16 @@ ifeq ($(shell uname -s), Linux)
 endif
 #              Файлы для основного проекта
 PROJECT_FILES_SOURCES= main_debug.cpp Matrix.cpp graph.cpp MatrixBnB.cpp GraphAlgorithms.cpp Ant.cpp AntAlgorithm.cpp \
-						BnBAlgorithm.cpp
+						BnBAlgorithm.cpp ConsoleView.cpp
 PROJECT_FILES_OBJECTS=$(addprefix $(BD)/,$(PROJECT_FILES_SOURCES:.cpp=.o))
 #              Файлы для тестов
-TESTS_FILES_SOURCES=main_test.cpp Matrix.cpp graph.cpp GraphAlgorithms.cpp MatrixBnB.cpp Ant.cpp AntAlgorithm.cpp
-TESTS_FILES_OBJECTS=$(addprefix $(BD)/,$(TESTS_FILES_SOURCES:.cpp=.o))
+# TESTS_FILES_SOURCES=main_test.cpp Matrix.cpp graph.cpp GraphAlgorithms.cpp MatrixBnB.cpp Ant.cpp AntAlgorithm.cpp ConsoleView.cpp
+# TESTS_FILES_OBJECTS=$(addprefix $(BD)/,$(TESTS_FILES_SOURCES:.cpp=.o))
 
 all: clean debug
+
+view:
+	g++ View/ConsoleView.cpp Model/graph.cpp Model/Matrix.cpp Model/GraphAlgorithms.cpp Model/SalesmanTask/AntAlgorithm/AntAlgorithm.cpp Model/SalesmanTask/BnBAlgorithm/BnBAlgorithm.cpp -o viewtest
 
 ./$(BD)/%.o:%.cpp
 	$(CC) $(CXX_FLAGS) $< -o $@
@@ -39,3 +42,4 @@ test: clean $(TESTS_FILES_OBJECTS)
 clean:
 	rm -rf $(BD)/*.*
 	rm -rf $(BD)/*
+	

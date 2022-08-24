@@ -88,7 +88,7 @@ Matrix GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
     size_t size = graph.size();
     std::set<int> visitedVertices;
     std::vector<std::pair<int, int>> traveledEdges;
-    visitedVertices.insert(generateRandomValue(0, size - 1));
+    // visitedVertices.insert(generateRandomValue(0, size - 1));
     while (visitedVertices.size() < size) {
         int minWeight = std::numeric_limits<int>::infinity(), to = 0, from = 0;
         for (auto i : visitedVertices) {

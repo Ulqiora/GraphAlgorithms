@@ -9,12 +9,12 @@
 #include "graph.h"
 namespace s21 {
 
-int generateRandomValue(int minimum, int maximum) {
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist(minimum, maximum);
-    return dist(rng);
-}
+// int generateRandomValue(int minimum, int maximum) {
+//     std::random_device dev;
+//     std::mt19937 rng(dev());
+//     std::uniform_int_distribution<std::mt19937::result_type> dist(minimum, maximum);
+//     return dist(rng);
+// }
 
 class GraphAlgorithms {
    private:
@@ -27,6 +27,7 @@ class GraphAlgorithms {
     bool isShortestPath(int way, int minWay) { return way != 0 && way < minWay; }
 
    public:
+    GraphAlgorithms() {}
     std::vector<int> depthFirstSearch(Graph &graph, int startVertex);
     std::vector<int> breadthFirstSearch(Graph &graph, int startVertex);
     double getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2);

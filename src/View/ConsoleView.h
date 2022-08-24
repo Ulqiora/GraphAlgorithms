@@ -1,15 +1,15 @@
+#pragma once
 #include <iostream>
 #include <vector>
 #include <string>
-
 #include "../Model/graph.h"
-// #include "../Model/GraphAlgorithms.h"
+#include "../Model/GraphAlgorithms.h"
 
 namespace s21 {
 class ConsoleView {
     private:
         Graph myGraph;
-        // GraphAlgorithms myAlgorithms;
+        GraphAlgorithms myAlgorithms;
         unsigned int currentCommand = mainMenu;
 
         enum commandList {
@@ -22,7 +22,8 @@ class ConsoleView {
             shortestAll = 6,
             spanTree = 7,
             salesMan = 8,
-            exit = 9
+            exit = 9,
+            vertexNum = 10
         };
 
         std::vector<std::string> printable {
@@ -44,6 +45,8 @@ class ConsoleView {
             "Shortest path between all vertices: \n",  // 6
             "Spanning tree result: \n",  // 7
             "Salesman problem result: \n",  // 8
+            "Exit\n",  // 9
+            "Enter the number of vertex: \n",  // 10
         };
 
     public:
@@ -57,8 +60,7 @@ class ConsoleView {
         void runCommand();
         void loadGraphMethod();
         void createImageMethod();
-        void breadthTraversalMethod();
-        void depthTraversalMethod();
+        void traversalMethod(const commandList& position);
         void shortestTwoMethod();
         void shortestAllMethod();
         void spanTreeMethod();

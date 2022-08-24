@@ -54,10 +54,10 @@ namespace s21 {
                 createImageMethod();
                 break;
             case breadthTraversal:
-                breadthTraversalMethod();
+                traversalMethod(breadthTraversal);
                 break;
             case depthTraversal:
-                depthTraversalMethod();
+                traversalMethod(depthTraversal);
                 break;
             case shortestTwo:
                 shortestTwoMethod();
@@ -94,19 +94,63 @@ namespace s21 {
     }
 
     void ConsoleView::createImageMethod() {
-        std::cout << "Creating image\n";
+        printMessage(createImage);
+        std::string fileName;
+        std::cin >> fileName;
+        try {
+            myGraph.exportGraphToDot(fileName);
+            std::cout << "File created successfully" << std::endl;
+        } catch (std::exception &e){
+                std::cout << e.what() << std::endl;
+        }
+        currentCommand = mainMenu;
+        runCommand();
     }
 
-    void ConsoleView::breadthTraversalMethod() {
-        std::cout << "Breadth traverse\n";
-    }
-
-    void ConsoleView::depthTraversalMethod() {
-        std::cout << "Depth traverse\n";
+    void ConsoleView::traversalMethod(const commandList& position) {
+        printMessage(vertexNum);
+        std::string vertexStr;
+        std::cin >> vertexStr;
+        std::vector<int> result;
+        if (isNumber(vertexStr)) {
+            int vertexInt = stoi(vertexStr);
+            if (vertexInt < 1 || vertexInt > myGraph.size()) {
+                std::cout << "Wrong graph index!" << std::endl;
+            } else {
+                if (position == breadthTraversal) {
+                    result = myAlgorithms.breadthFirstSearch(myGraph, vertexInt);
+                    printMessage(breadthTraversal);
+                } else {
+                    result = myAlgorithms.depthFirstSearch(myGraph, vertexInt);
+                    printMessage(depthTraversal);
+                }
+                for (unsigned int i = 0; i < result.size(); i++) {
+                    std::cout << result[i] << ' ';
+                }
+                std::cout << std::endl;
+            }
+        }
+        runMenu();
     }
 
     void ConsoleView::shortestTwoMethod() {
-        std::cout << "Finding shortest two\n";
+        printMessage(vertexNum);
+        std::string firstVertex, secondVertex;
+        std::cin >> firstVertex;
+        std::cin >> secondVertex;
+        if (isNumber(firstVertex) && isNumber(secondVertex)) {
+            try {
+                int firstNum = std::stoi(firstVertex);
+                int secondNum = std::stoi(secondVertex);
+                printMessage(shortestTwo);
+                std::cout << myAlgorithms.getShortestPathBetweenVertices(myGraph, firstNum, secondNum) << std::endl;
+            } catch (std::exception &e){
+                std::cout << e.what() << std::endl;
+            }
+        } else {
+            std::cout << "One or both values not correct!" << std::endl;
+        }
+        runMenu();
     }
 
     void ConsoleView::shortestAllMethod() {
@@ -128,8 +172,3 @@ namespace s21 {
     }
 
 }  // namespace s21
-
-int main() {
-    s21::ConsoleView con;
-    return 0;
-}
