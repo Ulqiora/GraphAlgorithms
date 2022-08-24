@@ -27,7 +27,7 @@ class ConsoleView {
         };
 
         std::vector<std::string> printable {
-            "Choose one of the commands above\n" \
+            "Choose one of the commands below:\n\n" \
             "1. load the original graph from a file\n" \
             "2. create an image from the graph\n" \
             "3. graph traversal in breadth\n" \
@@ -62,7 +62,7 @@ class ConsoleView {
         void createImageMethod();
         void traversalMethod(const commandList& position);
         void shortestTwoMethod();
-        void shortestAllMethod();
+        void shortestOrSpanningMethod(const commandList& position);
         void spanTreeMethod();
         void salesManMethod();
         inline void printMessage(const commandList& position);

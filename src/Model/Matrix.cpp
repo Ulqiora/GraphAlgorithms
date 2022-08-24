@@ -112,4 +112,15 @@ Matrix& Matrix::operator*=(const double value) {
     return *this;
 }
 
+void Matrix::print() {
+    if (_size > 0) {
+        for (int i = 0; i < _size; i++) {
+            for (int j = 0; j < _size; j++) {
+                std::cout << matrixData[i][j] << '\t';
+            }
+            std::cout << std::endl;
+        }
+    }
+}
+
 }  // namespace s21

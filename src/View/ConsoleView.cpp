@@ -10,6 +10,7 @@ namespace s21 {
                 runCommand();
             } catch (std::exception &e){
                 std::cout << e.what() << std::endl;
+                runMenu();
             }
         }
     }
@@ -63,10 +64,10 @@ namespace s21 {
                 shortestTwoMethod();
                 break;
             case shortestAll:
-                shortestAllMethod();
+                shortestOrSpanningMethod(shortestAll);
                 break;
             case spanTree:
-                spanTreeMethod();
+                shortestOrSpanningMethod(spanTree);
                 break;
             case salesMan:
                 salesManMethod();
@@ -94,75 +95,108 @@ namespace s21 {
     }
 
     void ConsoleView::createImageMethod() {
-        printMessage(createImage);
-        std::string fileName;
-        std::cin >> fileName;
-        try {
-            myGraph.exportGraphToDot(fileName);
-            std::cout << "File created successfully" << std::endl;
-        } catch (std::exception &e){
-                std::cout << e.what() << std::endl;
+        if (myGraph.size() > 0) {
+            printMessage(createImage);
+            std::string fileName;
+            std::cin >> fileName;
+            try {
+                myGraph.exportGraphToDot(fileName);
+                std::cout << "File created successfully" << std::endl;
+            } catch (std::exception &e){
+                    std::cout << e.what() << std::endl;
+            }
+        } else {
+            std::cout << "Incorrect graph!" << std::endl;
         }
-        currentCommand = mainMenu;
-        runCommand();
+        runMenu();
     }
 
     void ConsoleView::traversalMethod(const commandList& position) {
-        printMessage(vertexNum);
-        std::string vertexStr;
-        std::cin >> vertexStr;
-        std::vector<int> result;
-        if (isNumber(vertexStr)) {
-            int vertexInt = stoi(vertexStr);
-            if (vertexInt < 1 || vertexInt > myGraph.size()) {
-                std::cout << "Wrong graph index!" << std::endl;
-            } else {
-                if (position == breadthTraversal) {
-                    result = myAlgorithms.breadthFirstSearch(myGraph, vertexInt);
-                    printMessage(breadthTraversal);
+        if (myGraph.size() > 0) {
+            printMessage(vertexNum);
+            std::string vertexStr;
+            std::cin >> vertexStr;
+            std::vector<int> result;
+            if (isNumber(vertexStr)) {
+                int vertexInt = stoi(vertexStr);
+                if (vertexInt < 1 || vertexInt > myGraph.size()) {
+                    std::cout << "Wrong graph index!" << std::endl;
                 } else {
-                    result = myAlgorithms.depthFirstSearch(myGraph, vertexInt);
-                    printMessage(depthTraversal);
+                    if (position == breadthTraversal) {
+                        result = myAlgorithms.breadthFirstSearch(myGraph, vertexInt);
+                        printMessage(breadthTraversal);
+                    } else {
+                        result = myAlgorithms.depthFirstSearch(myGraph, vertexInt);
+                        printMessage(depthTraversal);
+                    }
+                    for (unsigned int i = 0; i < result.size(); i++) {
+                        std::cout << result[i] << ' ';
+                    }
+                    std::cout << std::endl;
                 }
-                for (unsigned int i = 0; i < result.size(); i++) {
-                    std::cout << result[i] << ' ';
-                }
-                std::cout << std::endl;
             }
+        } else {
+            std::cout << "Incorrect graph!" << std::endl;
         }
         runMenu();
     }
 
     void ConsoleView::shortestTwoMethod() {
-        printMessage(vertexNum);
-        std::string firstVertex, secondVertex;
-        std::cin >> firstVertex;
-        std::cin >> secondVertex;
-        if (isNumber(firstVertex) && isNumber(secondVertex)) {
-            try {
-                int firstNum = std::stoi(firstVertex);
-                int secondNum = std::stoi(secondVertex);
-                printMessage(shortestTwo);
-                std::cout << myAlgorithms.getShortestPathBetweenVertices(myGraph, firstNum, secondNum) << std::endl;
-            } catch (std::exception &e){
-                std::cout << e.what() << std::endl;
+        if (myGraph.size() > 0) {
+            printMessage(vertexNum);
+            std::string firstVertex, secondVertex;
+            std::cin >> firstVertex;
+            std::cin >> secondVertex;
+            if (isNumber(firstVertex) && isNumber(secondVertex)) {
+                try {
+                    int firstNum = std::stoi(firstVertex);
+                    int secondNum = std::stoi(secondVertex);
+                    if (firstNum != secondNum && firstNum > 0 && secondNum > 0
+                        && firstNum < myGraph.size() && secondNum < myGraph.size()) {
+                        printMessage(shortestTwo);
+                        std::cout << myAlgorithms.getShortestPathBetweenVertices(myGraph, firstNum, secondNum) << std::endl;
+                    } else {
+                        std::cout << "One or both values not correct!" << std::endl;
+                    }
+                } catch (std::exception &e){
+                    std::cout << e.what() << std::endl;
+                }
+            } else {
+                std::cout << "One or both values not correct!" << std::endl;
             }
         } else {
-            std::cout << "One or both values not correct!" << std::endl;
+            std::cout << "Incorrect graph!" << std::endl;
         }
         runMenu();
     }
 
-    void ConsoleView::shortestAllMethod() {
-        std::cout << "Finding shortest all\n";
-    }
-
-    void ConsoleView::spanTreeMethod() {
-        std::cout << "Finding spaning tree\n";
+    void ConsoleView::shortestOrSpanningMethod(const commandList& position) {
+        if (myGraph.size() > 0) {
+            Matrix path;
+            if (position == shortestAll) {
+                path = myAlgorithms.getShortestPathsBetweenAllVertices(myGraph);
+                printMessage(shortestAll);
+            } else {
+                path = myAlgorithms.getLeastSpanningTree(myGraph);
+                printMessage(spanTree);
+            }
+            path.print();
+        } else {
+            std::cout << "Incorrect graph!" << std::endl;
+        }
+        runMenu();
     }
 
     void ConsoleView::salesManMethod() {
-        std::cout << "Solving Salesman\n";
+        if (myGraph.size() > 0) {
+            TsmResult res;
+            res = myAlgorithms.solveTravelingSalesmanProblem(myGraph);
+            printMessage(salesMan);
+            std::cout << "Distance = " << res.distance << std::endl;
+        } else {
+            std::cout << "Incorrect graph!" << std::endl;
+        }
+        runMenu();
     }
 
     inline void ConsoleView::printMessage(const commandList& position) {

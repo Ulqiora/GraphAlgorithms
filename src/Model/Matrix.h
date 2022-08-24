@@ -28,5 +28,6 @@ class Matrix {
   void setValueForAll(double value);
   void mul_number(const double num);
   Matrix& operator*=(const double value);
+  void print();
 };
 }  // namespace s21
