@@ -8,13 +8,15 @@ TEST(GraphAlgorithms, DFT) {
   using namespace s21;
   Graph g1;
   g1.loadGraphFromFile("../materials/matrices/4.txt");
-  GraphAlgorithm ga;
+  GraphAlgorithms ga;
   std::vector<int> result = ga.depthFirstSearch(g1,1);
-  std::vector<int> result2;
-  result2.push_back(1);
-  result2.push_back(2);
-  result2.push_back(4);
-  result2.push_back(3);
+  std::vector<int> result2{1,2,4,3};
+  std::cout<<result.size()<<' '<<result2.size()<<'\n';
+  // for(auto&i : result)
+  //   std::cout<<i<<' ';
+  // std::cout<<'\n';
+  // for(auto&i : result2)
+  //   std::cout<<i<<' ';
   ASSERT_TRUE(result==result2);
 }
 
@@ -22,24 +24,16 @@ TEST(GraphAlgorithms, DFT2) {
   using namespace s21;
   Graph g1;
   g1.loadGraphFromFile("../materials/matrices/5.txt");
-  GraphAlgorithm ga;
+  GraphAlgorithms ga;
   std::vector<int> result = ga.depthFirstSearch(g1,1);
-  std::vector<int> result2;
-  result2.push_back(1);
-  result2.push_back(2);
-  result2.push_back(3);
-  result2.push_back(5);
-  result2.push_back(4);
+  std::vector<int> result2{1,2,3,5,4};
   ASSERT_TRUE(result==result2);
 }
 TEST(GraphAlgorithms, DFT3) {
   using namespace s21;
   Graph g1;
   g1.loadGraphFromFile("../materials/matrices/18.txt");
-  GraphAlgorithm ga;
+  GraphAlgorithms ga;
   std::vector<int> result = ga.depthFirstSearch(g1,1);
-  // std::vector<int> result2{};
-  // ASSERT_TRUE(result==result2);
-  for(auto&i : result)
-    std::cout<<i<<' ';
+  std::vector<int> result2{1,2,5,9,14,3,6,11,7,12,17,18,10,15,16};
 }

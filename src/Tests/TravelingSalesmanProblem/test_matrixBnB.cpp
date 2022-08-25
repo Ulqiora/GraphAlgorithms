@@ -23,7 +23,11 @@ TEST(MatrixBnB, CreateMatrixByGraph) {
 TEST(MatrixBnB, findMinimum) {
     using namespace s21;
     Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/5.txt");
+    g1.loadGraphFromFile("../materials/matrices/5_BNB.txt");
     MatrixBnB res(g1);
     std::vector<double> *out=res.findMinimumInAllRow();
+    std::vector<double>  minimums{11,2,2,3,4};
+    for(int i=0;i<g1.size();++i){
+        ASSERT_NEAR(minimums[i],(*out)[i],std::numeric_limits<double>::epsilon())
+    }
 }

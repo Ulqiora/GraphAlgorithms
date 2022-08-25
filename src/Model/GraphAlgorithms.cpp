@@ -29,7 +29,7 @@ std::vector<int> GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex
 
 void GraphAlgorithms::addToStack(Graph &graph, std::vector<bool> &visitedVertex,
                                  stack<int> &stackForAlgorithm, int currentIndex) {
-    for (int i = 0; i < graph.size(); ++i) {
+    for (int i = graph.size()-1; i >= 0; --i) {
         if ((!visitedVertex[i]) &&
             (std::fabs(graph(currentIndex, i)) > std::numeric_limits<double>::epsilon())) {
             stackForAlgorithm.push(i);

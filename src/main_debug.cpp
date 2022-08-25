@@ -6,12 +6,10 @@
 #include "View/ConsoleView.h"
 int main() {
   using namespace s21;
-  // Graph g1;
-  // g1.loadGraphFromFile("../materials/matrices/11.txt");
-  // BnBAlgorithm bb;
-  // TsmResult res=  bb.start(g1,1);
-  // for(auto   i:res.vertices) std::cout<<i<<' ';
-  // std::cout<<'\n'<<res.distance<<'\n';
-  s21::ConsoleView con;
+  Graph g1;
+  g1.loadGraphFromFile("../materials/matrices/18.txt");
+  GraphAlgorithms  ga;
+  std::cout<<ga.getShortestPathBetweenVertices(g1,1,6);
+  // s21::ConsoleView con;
   return 0;
 }

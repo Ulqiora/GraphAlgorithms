@@ -26,7 +26,8 @@ void Graph::initTypes() {
             if (std::fabs(adjacencyMatrix(i, j)) > std::numeric_limits<double>::epsilon()) {
                 if ((std::fabs(adjacencyMatrix(i, j) - 1.0) > std::numeric_limits<double>::epsilon()))
                     typeWeights = TypeGraphByWeights::WEIGHTED;
-            } else if (adjacencyMatrix(i, j) < 0)
+            }
+            if (adjacencyMatrix(i, j) < 0)
                 positiveWeights = false;
             if (i==j && std::fabs(adjacencyMatrix(i, j)) > std::numeric_limits<double>::epsilon())
                 loop=true;

@@ -12,7 +12,7 @@ PROJECT_FILES_SOURCES= main_debug.cpp Matrix.cpp graph.cpp MatrixBnB.cpp GraphAl
 						BnBAlgorithm.cpp ConsoleView.cpp
 PROJECT_FILES_OBJECTS=$(addprefix $(BD)/,$(PROJECT_FILES_SOURCES:.cpp=.o))
 #              Файлы для тестов
-TESTS_FILES_SOURCES=main_test.cpp Matrix.cpp graph.cpp GraphAlgorithms.cpp MatrixBnB.cpp Ant.cpp AntAlgorithm.cpp ConsoleView.cpp
+TESTS_FILES_SOURCES=main_test.cpp Matrix.cpp graph.cpp GraphAlgorithms.cpp MatrixBnB.cpp Ant.cpp AntAlgorithm.cpp BnBAlgorithm.cpp
 TESTS_FILES_OBJECTS=$(addprefix $(BD)/,$(TESTS_FILES_SOURCES:.cpp=.o))
 
 all: clean debug
@@ -32,9 +32,11 @@ all: clean debug
 debug:$(PROJECT_FILES_OBJECTS)
 	$(CC) -g  $^ -o $(BD)/$@ 
 	./$(BD)/$@
-test: clean $(TESTS_FILES_OBJECTS)
+tests: clean test_exe
+	./$(BD)/test
+
+test_exe:$(TESTS_FILES_OBJECTS)
 	$(CC) -g  $^ -o $(BD)/test   $(GTESTFLAGS)
-	./$(BD)/$@
 
 clean:
 	rm -rf $(BD)/*.*

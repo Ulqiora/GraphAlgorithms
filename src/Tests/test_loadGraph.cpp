@@ -84,7 +84,19 @@ TEST(Graph, LoadMatrices_CalcTypes5) {
   using namespace s21;
   Graph g1;
   g1.loadGraphFromFile("../src/Tests/Matrices/2_dir_weight_neg.txt");
-  // ASSERT_TRUE(g1.getTypeByDirection() == TypeGraphByDirection::DIRECTED);
-  // ASSERT_TRUE(g1.getTypeByWeights() == TypeGraphByWeights::WEIGHTED);
-  // ASSERT_TRUE(g1.hasNegativeWeights() == true);
+  ASSERT_TRUE(g1.getTypeByDirection() == TypeGraphByDirection::DIRECTED);
+  ASSERT_TRUE(g1.getTypeByWeights() == TypeGraphByWeights::WEIGHTED);
+  ASSERT_TRUE(g1.hasNegativeWeights() == true);
+}
+
+TEST(Graph, LoadMatrices_CalcTypes6) {
+  using namespace s21;
+  Graph g1;
+    try {
+      g1.loadGraphFromFile("../src/Tests/Matrices/2_loop.txt");
+  } catch (const std::exception& e) {
+      std::cout << "ERROR";
+  }
+  std::cout<<"has negative weights"<<g1.hasLoop();
+  ASSERT_TRUE(g1.hasLoop() == true);
 }
