@@ -17,6 +17,7 @@ class Graph {
     TypeGraphByDirection typeDirection;
     TypeGraphByWeights typeWeights;
     bool positiveWeights = true;
+    bool loop = false;
     void initTypes();
     void printInfoAboutEdge(int firstNode, int secondNode, std::ofstream& file,
                             const std::string& EdgesInFile, const Matrix& temp);
@@ -34,6 +35,7 @@ class Graph {
     bool hasNegativeWeights() { return !positiveWeights; }
     bool operator==(const Graph& other) { return adjacencyMatrix == other.adjacencyMatrix; }
     bool isCompliteGraph();
+    bool hasLoop(){return loop;}
     Matrix getMatrix() { return adjacencyMatrix; }
 };
 

@@ -6,6 +6,7 @@ void Graph::loadGraphFromFile(std::string filename) {
         typeDirection = TypeGraphByDirection::UNDIRECRED;
         typeWeights = TypeGraphByWeights::UNWEIGHTED;
         positiveWeights = true;
+        loop=false;
         std::ifstream file(filename);
         if (!file.is_open()) throw std::invalid_argument("File can't be opened");
         adjacencyMatrix.loadMatrix(file);
@@ -27,6 +28,8 @@ void Graph::initTypes() {
                     typeWeights = TypeGraphByWeights::WEIGHTED;
             } else if (adjacencyMatrix(i, j) < 0)
                 positiveWeights = false;
+            if (i==j && std::fabs(adjacencyMatrix(i, j)) > std::numeric_limits<double>::epsilon())
+                loop=true;
         }
     }
 }

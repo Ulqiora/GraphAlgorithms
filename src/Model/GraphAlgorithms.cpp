@@ -9,6 +9,9 @@ int generateRandomValue(int minimum, int maximum) {
 }
 
 std::vector<int> GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
+    if (graph.hasLoop()) throw std::invalid_argument("This graph have loop!");
+    if (startVertex < 1 || startVertex > graph.size())
+        throw std::invalid_argument("Wrong starting point value");
     int currentIndex = startVertex - 1;
     stack<int> stackForAlgorithm;
     std::vector<bool> visitedVertex(graph.size(), false);
@@ -40,6 +43,9 @@ void GraphAlgorithms::addToResultForDepth(stack<int> &stackForAlgorithm, std::ve
 }
 
 std::vector<int> GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
+    if (graph.hasLoop()) throw std::invalid_argument("This graph have loop!");
+    if (startVertex < 1 || startVertex > graph.size())
+        throw std::invalid_argument("Wrong starting point value");
     int currentIndex = startVertex - 1;
     queue<int> queueForAlgorithm;
     std::vector<bool> visitedVertex(graph.size(), false);
@@ -91,6 +97,7 @@ Matrix GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
     if (graph.getTypeByDirection() == TypeGraphByDirection::DIRECTED) {
         throw std::invalid_argument("This graph is directed!");
     }
+    if (graph.hasLoop()) throw std::invalid_argument("This graph рфы loops!");
     Matrix matrix(std::move(graph.getMatrix()));
     size_t size = graph.size();
     std::set<int> visitedVertices;
@@ -162,6 +169,9 @@ double GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1
 }
 
 TsmResult GraphAlgorithms::solveTravelingSalesmanProblemBrudeForce(Graph &graph) {
+    if (!graph.isCompliteGraph()) throw std::invalid_argument("This graph is not complete!");
+    if (graph.hasNegativeWeights()) throw std::invalid_argument("This graph has negative weights!");
+    if (graph.size() < 2) throw std::invalid_argument("This graph is very small! Try again!");
     TsmResult result;
     result.distance = INFINITY;
     std::vector<int> vertices;

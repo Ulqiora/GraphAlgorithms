@@ -96,6 +96,11 @@
         "set": "cpp",
         "variant": "cpp",
         "xlocmon": "cpp",
-        "xloctime": "cpp"
+        "xloctime": "cpp",
+        "charconv": "cpp",
+        "format": "cpp",
+        "forward_list": "cpp",
+        "xlocbuf": "cpp",
+        "xlocmes": "cpp"
     }
 }
