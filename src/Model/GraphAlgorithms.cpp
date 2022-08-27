@@ -98,22 +98,22 @@ Matrix GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
         throw std::invalid_argument("This graph is directed!");
     }
     if (graph.hasLoop()) throw std::invalid_argument("This graph рфы loops!");
-    Matrix matrix(std::move(graph.getMatrix()));
+    Matrix matrix = graph.getMatrix();
     size_t size = graph.size();
     std::set<int> visitedVertices;
     std::vector<std::pair<int, int>> traveledEdges;
-    visitedVertices.insert(generateRandomValue(0, size - 1));
+    visitedVertices.insert(generateRandomValue(0,size - 1));
     while (visitedVertices.size() < size) {
-        int minWeight = std::numeric_limits<int>::infinity(), to = 0, from = 0;
-        for (auto i : visitedVertices) {
-            for (size_t j = 0; j < size; j++) {
+        int minWeight = INT32_MAX;
+        int to = 0;
+        int from = 0;
+        for (auto i : visitedVertices)
+            for (size_t j = 0; j < size; j++)
                 if (isShortestPath(matrix(j, i), minWeight) && !visitedVertices.count(j)) {
                     minWeight = matrix(j, i);
                     from = i;
                     to = j;
                 }
-            }
-        }
         traveledEdges.push_back({from, to});
         visitedVertices.insert(to);
     }

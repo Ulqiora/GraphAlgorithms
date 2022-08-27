@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <algorithm>
+#include <initializer_list>
 #include "../../graph.h"
 namespace s21 {
 
@@ -14,6 +15,16 @@ class MatrixBnB {
     std::vector<double>* findMinimumInAllRows();
     std::vector<double>* findMinimumInAllCols();
    public:
+    MatrixBnB(const std::initializer_list<std::initializer_list<double>>& other):data(other.size()){
+        int i=0;
+        for(auto& row:other){
+            data.reserve(other.size());
+            for(auto& cell: row){
+                data[i].push_back(cell);
+            }
+            i++;
+        }
+    }
     MatrixBnB():data(0){}
     MatrixBnB(const Graph& graph);
     auto rows(){return data.size();}
