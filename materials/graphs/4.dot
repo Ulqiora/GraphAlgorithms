@@ -7,19 +7,7 @@ graph {
 		label = ""
 		weight = ""
 	];
-	2 -- 1 [
-		label = ""
-		weight = ""
-	];
 	2 -- 4 [
-		label = ""
-		weight = ""
-	];
-	3 -- 1 [
-		label = ""
-		weight = ""
-	];
-	4 -- 2 [
 		label = ""
 		weight = ""
 	];
