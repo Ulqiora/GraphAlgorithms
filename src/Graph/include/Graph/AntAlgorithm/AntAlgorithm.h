@@ -12,7 +12,6 @@ class AntAlgorithm {
     Graph* graph = nullptr;
     Matrix pheromoneMap;
     std::vector<Ant> ants;
-    const int numOfIteration = 30;
     const double evaporationCoef = 0.5;
     void initPheromonesMap();
 

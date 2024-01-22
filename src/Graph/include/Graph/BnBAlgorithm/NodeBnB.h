@@ -50,7 +50,7 @@ public:
         }
     }
     void createChildrens(){
-        for(int i=0;i<matrix.size();++i){
+        for(size_t i=0;i<matrix.size();++i){
             if(std::find(currentPath.begin(),currentPath.end(),i)==currentPath.end()){
                 childrens.push_back((NodeBnB((*this),currentPath.back(),i)));
             }

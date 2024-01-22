@@ -11,7 +11,6 @@ class Ant {
    private:
     std::vector<bool> passedCity;
     std::vector<int> path;
-    int proximityRatio = 1;
     int alpha = 1;
     int beta = 1;
     double pathLength = 0;

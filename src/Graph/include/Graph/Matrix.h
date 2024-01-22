@@ -22,7 +22,7 @@ class Matrix {
   ~Matrix() { freeMemory(); }
   int size() const { return _size; }
   const Matrix& operator=(const Matrix& other);
-  bool operator==(const Matrix& other);
+  bool operator==(const Matrix& other)const;
   void setSize(int newNumOfRows);
   void loadMatrix(std::ifstream& file);
   void setValueForAll(double value);

@@ -87,7 +87,7 @@ void Matrix::setValueForAll(double value) {
   }
 }
 
-bool Matrix::operator==(const Matrix& other) {
+bool Matrix::operator==(const Matrix& other) const {
   if (_size != other._size) return false;
   for (int i = 0; i < _size; i++) {
     for (int j = 0; j < _size; ++j) {

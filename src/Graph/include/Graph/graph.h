@@ -32,8 +32,8 @@ class Graph {
   void setValue(int i, int j, double value) { adjacencyMatrix(i, j) = value; }
   TypeGraphByDirection getTypeByDirection() { return typeDirection; }
   TypeGraphByWeights getTypeByWeights() { return typeWeights; }
-  bool hasNegativeWeights() { return !positiveWeights; }
-  bool operator==(const Graph& other) {
+  bool hasNegativeWeights() const { return !positiveWeights; }
+  bool operator==(const Graph& other) const {
     return adjacencyMatrix == other.adjacencyMatrix;
   }
   bool isCompliteGraph();

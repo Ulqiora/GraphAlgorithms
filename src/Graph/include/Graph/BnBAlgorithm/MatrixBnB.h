@@ -29,12 +29,12 @@ class MatrixBnB {
     MatrixBnB(const Graph& graph);
     auto rows(){return data.size();}
     auto cols(int numOfRow){return data[numOfRow].size();}
-    auto begin() const { return data.begin(); }
-    auto end() const { return data.end(); }
-    double size()const{ return data.size();}
+    [[nodiscard]] auto begin() const { return data.begin(); }
+    [[nodiscard]] auto end() const { return data.end(); }
+    [[nodiscard]] size_t size()const{ return data.size();}
     double reducedRowsAndCalcMinimums();
     double reducedColsAndCalcMinimums();
-    MatrixBnB createCopyWithoutEdge(int indexFVert,int indexSVert)const;
+    [[nodiscard]] MatrixBnB createCopyWithoutEdge(size_t indexFVert,size_t indexSVert)const;
     Cell& operator()(int i, int j) { return data[i][j]; }
     Cell operator()(int i, int j) const { return data[i][j]; }
 

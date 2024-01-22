@@ -16,7 +16,7 @@ std::vector<double>* MatrixBnB::findMinimumInAllRows() {
     std::vector<double>* result = new std::vector<double>();
     for (auto& row : data) {
         double min = numLimD::infinity();
-        for (int i = 0; i < data.size(); ++i) {
+        for (size_t i = 0; i < data.size(); ++i) {
             if (row[i] < min){ min = row[i];
             }
         }
@@ -28,9 +28,9 @@ std::vector<double>* MatrixBnB::findMinimumInAllRows() {
 
 std::vector<double>* MatrixBnB::findMinimumInAllCols() {
     std::vector<double>* result = new std::vector<double>();
-    for (int col = 0; col < data.size(); ++col) {
+    for (size_t col = 0; col < data.size(); ++col) {
         double min = data[0][col];
-        for (int row = 0; row < data.size(); ++row) {
+        for (size_t row = 0; row < data.size(); ++row) {
             if (data[row][col] < min) min = data[row][col];
         }
         min=(min==numLimD::infinity()?0:min);
@@ -60,8 +60,8 @@ double MatrixBnB::reducedRowsAndCalcMinimums()
 double MatrixBnB::reducedColsAndCalcMinimums()
 {
     std::vector<double>* minimums = findMinimumInAllCols();
-    for(int col=0;col<data.size();++col){
-        for(int row=0; row<data.size();++row){
+    for(size_t col=0;col<data.size();++col){
+        for(size_t row=0; row<data.size();++row){
             data[row][col]-=((*minimums)[col]==numLimD::infinity()?0:(*minimums)[col]);
         }
     }
@@ -71,11 +71,11 @@ double MatrixBnB::reducedColsAndCalcMinimums()
     return result;
 }
 
-MatrixBnB MatrixBnB::createCopyWithoutEdge(int indexFVert,int indexSVert)const 
+MatrixBnB MatrixBnB::createCopyWithoutEdge(size_t indexFVert,size_t indexSVert)const
 {
     MatrixBnB result(*this);
-    for(int i=0;i<data.size();++i){
-        for(int j=0;j<data.size();++j){
+    for(size_t i=0;i<data.size();++i){
+        for(size_t j=0;j<data.size();++j){
             if (i == indexFVert || j == indexSVert) result(i, j) = numLimD::infinity();
         }
     }
