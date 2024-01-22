@@ -2,11 +2,13 @@
 
 #include <string>
 
-#include "../src/Model/include/GraphAlgorithms.h"
+#include <Graph/GraphAlgorithms.h>
 
 TEST(GraphAlgorithms, leastSpanningTree) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/5.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"5.txt";
+    g1.loadGraphFromFile(pathFile.string());
     s21::GraphAlgorithms ga;
     s21::Matrix result = ga.getLeastSpanningTree(g1);
     s21::MatrixBnB result2{
@@ -20,7 +22,9 @@ TEST(GraphAlgorithms, leastSpanningTree) {
 
 TEST(GraphAlgorithms, leastSpanningTree_Direction) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/5_BNB.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"5_BNB.txt";
+    g1.loadGraphFromFile(pathFile.string());
     s21::GraphAlgorithms ga;
     ASSERT_ANY_THROW(s21::Matrix result = ga.getLeastSpanningTree(g1););
 }

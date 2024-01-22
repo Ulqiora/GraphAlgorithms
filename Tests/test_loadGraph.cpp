@@ -1,12 +1,13 @@
 #include <gtest/gtest.h>
 
 #include <string>
-
-#include "../src/Model/include/graph.h"
+#include <Graph/GraphAlgorithms.h>
 
 TEST(Graph, LoadMatricesCorrectRead) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/18.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"18.txt";
+    g1.loadGraphFromFile(pathFile.string());
     s21::Graph g2(g1.size());
     g2.setValue(0, 1, 15);
     g2.setValue(0, 2, 55);
@@ -35,47 +36,61 @@ TEST(Graph, LoadMatricesCorrectRead) {
 TEST(Graph, LoadMatrices_CheckCorrectPath) {
     ASSERT_ANY_THROW({
         s21::Graph g1;
-        g1.loadGraphFromFile("../materials/matrices/17.txt");
+        std::filesystem::path pathFile(PROJECT_PATH);
+        pathFile=pathFile/"materials"/"matrices"/"17.txt";
+        g1.loadGraphFromFile(pathFile.string());
     });
 }
 
 TEST(Graph, LoadMatrices_CheckCorrectSize) {
     ASSERT_ANY_THROW({
         s21::Graph g1;
-        g1.loadGraphFromFile("../src/Tests/Matrices/18_fail_size.txt");
+        std::filesystem::path pathFile(PROJECT_PATH);
+        pathFile=pathFile/"materials"/"matrices"/"18_fail_size.txt";
+        g1.loadGraphFromFile(pathFile.string());
     });
 }
 TEST(Graph, LoadMatrices_CalcTypes1) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../src/Tests/Matrices/2_undir_unwei_positive.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"2_undir_unwei_positive.txt";
+    g1.loadGraphFromFile(pathFile.string());
     ASSERT_TRUE(g1.getTypeByDirection() == s21::TypeGraphByDirection::UNDIRECRED);
     ASSERT_TRUE(g1.getTypeByWeights() == s21::TypeGraphByWeights::UNWEIGHTED);
     ASSERT_TRUE(g1.hasNegativeWeights() == false);
 }
 TEST(Graph, LoadMatrices_CalcTypes2) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../src/Tests/Matrices/2_undir_weight_pos.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"2_undir_weight_pos.txt";
+    g1.loadGraphFromFile(pathFile.string());
     ASSERT_TRUE(g1.getTypeByDirection() == s21::TypeGraphByDirection::UNDIRECRED);
     ASSERT_TRUE(g1.getTypeByWeights() == s21::TypeGraphByWeights::WEIGHTED);
     ASSERT_TRUE(g1.hasNegativeWeights() == false);
 }
 TEST(Graph, LoadMatrices_CalcTypes3) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../src/Tests/Matrices/2_dir_unweight_pos.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"2_dir_unweight_pos.txt";
+    g1.loadGraphFromFile(pathFile.string());
     ASSERT_TRUE(g1.getTypeByDirection() == s21::TypeGraphByDirection::DIRECTED);
     ASSERT_TRUE(g1.getTypeByWeights() == s21::TypeGraphByWeights::UNWEIGHTED);
     ASSERT_TRUE(g1.hasNegativeWeights() == false);
 }
 TEST(Graph, LoadMatrices_CalcTypes4) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../src/Tests/Matrices/2_dir_weight_pos.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"2_dir_weight_pos.txt";
+    g1.loadGraphFromFile(pathFile.string());
     ASSERT_TRUE(g1.getTypeByDirection() == s21::TypeGraphByDirection::DIRECTED);
     ASSERT_TRUE(g1.getTypeByWeights() == s21::TypeGraphByWeights::WEIGHTED);
     ASSERT_TRUE(g1.hasNegativeWeights() == false);
 }
 TEST(Graph, LoadMatrices_CalcTypes5) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../src/Tests/Matrices/2_dir_weight_neg.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"2_dir_weight_neg.txt";
+    g1.loadGraphFromFile(pathFile.string());
     ASSERT_TRUE(g1.getTypeByDirection() == s21::TypeGraphByDirection::DIRECTED);
     ASSERT_TRUE(g1.getTypeByWeights() == s21::TypeGraphByWeights::WEIGHTED);
     ASSERT_TRUE(g1.hasNegativeWeights() == true);
@@ -84,7 +99,9 @@ TEST(Graph, LoadMatrices_CalcTypes5) {
 TEST(Graph, LoadMatrices_CalcTypes6) {
     s21::Graph g1;
     try {
-        g1.loadGraphFromFile("../src/Tests/Matrices/2_loop.txt");
+        std::filesystem::path pathFile(PROJECT_PATH);
+        pathFile=pathFile/"materials"/"matrices"/"2_loop.txt";
+        g1.loadGraphFromFile(pathFile.string());
     } catch (const std::exception& e) {
         std::cout << "ERROR";
     }

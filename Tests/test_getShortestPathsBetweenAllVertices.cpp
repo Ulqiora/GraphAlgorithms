@@ -1,12 +1,13 @@
 #include <gtest/gtest.h>
 
 #include <string>
-
-#include "../src/Model/include/GraphAlgorithms.h"
+#include <Graph/GraphAlgorithms.h>
 
 TEST(GraphAlgorithms, getShortestPathsBetweenAllVertices) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/5.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"5.txt";
+    g1.loadGraphFromFile(pathFile.string());
     s21::GraphAlgorithms ga;
     s21::Matrix result = ga.getShortestPathsBetweenAllVertices(g1);
     s21::MatrixBnB result2{

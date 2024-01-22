@@ -1,8 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <string>
-
-#include "../src/Model/include/GraphAlgorithms.h"
+#include <Graph/GraphAlgorithms.h>
 
 // TEST(GraphAlgorithmsTest, getShortestPathBetweenVertices) {
 //   s21::Graph g1;
@@ -23,15 +22,9 @@
 
 TEST(GraphAlgorithmsTest, getShortestPathBetweenVertices_test) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/5_BNB.txt");
-    s21::GraphAlgorithms ga;
-    double value = ga.getShortestPathBetweenVertices(g1, 1, 2);
-    ASSERT_EQ(value, 15);
-}
-
-TEST(GraphAlgorithmsTest, getShortestPathBetweenVertices_test1) {
-    s21::Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/5_BNB.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"5_BNB.txt";
+    g1.loadGraphFromFile(pathFile.string());
     s21::GraphAlgorithms ga;
     double value = ga.getShortestPathBetweenVertices(g1, 1, 2);
     ASSERT_EQ(value, 15);

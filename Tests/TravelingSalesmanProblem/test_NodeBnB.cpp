@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
-
-#include "../../src/Model/include/BnBAlgorithm/NodeBnB.h"
-
+#include <Graph/GraphAlgorithms.h>
+#include "config.h"
 TEST(NodeBnB, NodeBnBCreateChildren) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/5_BNB.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"5_BNB.txt";
+    g1.loadGraphFromFile(pathFile.string());
     s21::NodeBnB node(g1, 0);
     node.createChildrens();
     ASSERT_TRUE(node(0).getLowerBound() == 35);

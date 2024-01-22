@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
-
-#include "../../src/Model/include/BnBAlgorithm/MatrixBnB.h"
-
+#include <Graph/GraphAlgorithms.h>
+#include "config.h"
 TEST(MatrixBnB, CreateMatrixByGraph) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/5.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"5.txt";
+    g1.loadGraphFromFile(pathFile.string());
     s21::MatrixBnB res(g1);
     for (int i = 0; i < g1.size(); ++i) {
         for (int j = 0; j < g1.size(); ++j) {
@@ -18,7 +19,9 @@ TEST(MatrixBnB, CreateMatrixByGraph) {
 
 TEST(MatrixBnB, findMinimum) {
     s21::Graph g1;
-    g1.loadGraphFromFile("../materials/matrices/5_BNB.txt");
+    std::filesystem::path pathFile(PROJECT_PATH);
+    pathFile=pathFile/"materials"/"matrices"/"5_BNB.txt";
+    g1.loadGraphFromFile(pathFile.string());
     s21::MatrixBnB res(g1);
     std::vector<double> *out = res.findMinimumInAllRows();
     std::vector<double> minimums{10, 2, 2, 3, 4};

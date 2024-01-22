@@ -8,7 +8,7 @@
 #include "test_getShortestPathBetweenVertices.cpp"
 #include "test_getShortestPathsBetweenAllVertices.cpp"
 #include "test_loadGraph.cpp"
-
+#include "config.h"
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
