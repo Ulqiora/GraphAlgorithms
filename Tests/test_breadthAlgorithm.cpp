@@ -1,13 +1,14 @@
+#include <Graph/GraphAlgorithms.h>
 #include <gtest/gtest.h>
 
-#include <string>
 #include <filesystem>
-#include <Graph/GraphAlgorithms.h>
+#include <string>
+
 #include "config.h"
 TEST(GraphAlgorithms, BFT) {
     s21::Graph g1;
     std::filesystem::path pathFile(PROJECT_PATH);
-    pathFile=pathFile/"materials"/"matrices"/"4.txt";
+    pathFile = pathFile / "materials" / "matrices" / "4.txt";
     g1.loadGraphFromFile(pathFile.string());
     s21::GraphAlgorithms ga;
     std::vector<int> result = ga.breadthFirstSearch(g1, 1);
@@ -22,7 +23,7 @@ TEST(GraphAlgorithms, BFT) {
 TEST(GraphAlgorithms, BFT2) {
     s21::Graph g1;
     std::filesystem::path pathFile(PROJECT_PATH);
-    pathFile=pathFile/"materials"/"matrices"/"5.txt";
+    pathFile = pathFile / "materials" / "matrices" / "5.txt";
     g1.loadGraphFromFile(pathFile.string());
     s21::GraphAlgorithms ga;
     std::vector<int> result = ga.breadthFirstSearch(g1, 1);
@@ -38,7 +39,7 @@ TEST(GraphAlgorithms, BFT2) {
 TEST(GraphAlgorithms, BFT3) {
     s21::Graph g1;
     std::filesystem::path pathFile(PROJECT_PATH);
-    pathFile=pathFile/"materials"/"matrices"/"18.txt";
+    pathFile = pathFile / "materials" / "matrices" / "18.txt";
     g1.loadGraphFromFile(pathFile.string());
     s21::GraphAlgorithms ga;
     std::vector<int> result = ga.breadthFirstSearch(g1, 1);

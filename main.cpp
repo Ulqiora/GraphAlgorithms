@@ -1,7 +1,8 @@
-#include "src/View/include/View/ConsoleView.h"
 #include <iomanip>
 #include <iostream>
+
+#include "src/View/include/View/ConsoleView.h"
 int main() {
-  s21::ConsoleView con;
-  return 0;
+    s21::ConsoleView con;
+    return 0;
 }

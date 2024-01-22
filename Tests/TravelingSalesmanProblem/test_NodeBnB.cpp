@@ -1,10 +1,11 @@
-#include <gtest/gtest.h>
 #include <Graph/GraphAlgorithms.h>
+#include <gtest/gtest.h>
+
 #include "config.h"
 TEST(NodeBnB, NodeBnBCreateChildren) {
     s21::Graph g1;
     std::filesystem::path pathFile(PROJECT_PATH);
-    pathFile=pathFile/"materials"/"matrices"/"5_BNB.txt";
+    pathFile = pathFile / "materials" / "matrices" / "5_BNB.txt";
     g1.loadGraphFromFile(pathFile.string());
     s21::NodeBnB node(g1, 0);
     node.createChildrens();

@@ -1,9 +1,9 @@
 #include <Graph/AntAlgorithm/Ant.h>
-namespace s21{
-    int Ant::getRamdomValue(int minimum,int maximum){
+namespace s21 {
+    int Ant::getRamdomValue(int minimum, int maximum) {
         std::random_device dev;
         std::mt19937 rng(dev());
-        std::uniform_int_distribution<std::mt19937::result_type> dist(minimum,maximum);
+        std::uniform_int_distribution<std::mt19937::result_type> dist(minimum, maximum);
         return dist(rng);
     }
 
@@ -12,7 +12,7 @@ namespace s21{
         passedCity.clear();
         passedCity.resize(sizeOfGraph, false);
         pathLength = 0;
-        int random=getRamdomValue(0,sizeOfGraph-1);
+        int random = getRamdomValue(0, sizeOfGraph - 1);
         path.push_back(random);
         passedCity[random] = true;
     }
@@ -28,7 +28,7 @@ namespace s21{
     }
 
     double Ant::calculateNumerator(std::map<int, double>* dictionaryOfAvailablePaths, const Matrix& pheromonesMap,
-                              int currentIndex) {
+                                   int currentIndex) {
         double eta = pow(1 / (*dictionaryOfAvailablePaths)[currentIndex], beta);
         double teta = pow(pheromonesMap(path.back(), currentIndex), alpha);
         return eta * teta;
@@ -36,9 +36,9 @@ namespace s21{
 
     double Ant::calcDenominator(std::map<int, double>* dictionaryOfAvailablePaths, const Matrix& pheromonesMap) {
         double sumOfAllProbabilities = 0.0;
-        for (auto& i : (*dictionaryOfAvailablePaths)) {
+        for (auto& i: (*dictionaryOfAvailablePaths)) {
             sumOfAllProbabilities +=
-                pow(1 / i.second, beta) * pow(pheromonesMap(path.back(), i.first), alpha);
+                    pow(1 / i.second, beta) * pow(pheromonesMap(path.back(), i.first), alpha);
         }
         return sumOfAllProbabilities;
     }
@@ -48,7 +48,7 @@ namespace s21{
         std::map<int, double>* dictionaryOfAvailablePaths = createDictionaryOfAvailablePaths(graph);
         double numeratorProbability = 0.0;
         double denominatorProbability = calcDenominator(dictionaryOfAvailablePaths, pheromonesMap);
-        for (auto& i : (*dictionaryOfAvailablePaths)) {
+        for (auto& i: (*dictionaryOfAvailablePaths)) {
             numeratorProbability += calculateNumerator(dictionaryOfAvailablePaths, pheromonesMap, i.first);
             probabilities->insert(std::make_pair(i.first, numeratorProbability / denominatorProbability));
         }
@@ -57,12 +57,12 @@ namespace s21{
 
     void Ant::chooseWay(Graph* graph, std::map<int, double>* probabilities) {
         if (probabilities->size() == 1) {
-            double temp=(*graph)(path.back(),(probabilities->begin()->first));
+            double temp = (*graph)(path.back(), (probabilities->begin()->first));
             path.push_back(probabilities->begin()->first);
             pathLength = pathLength + temp;
         } else {
-            double randValue = getRamdomValue(1,100)/100.0;
-            for (auto& it : (*probabilities)) {
+            double randValue = getRamdomValue(1, 100) / 100.0;
+            for (auto& it: (*probabilities)) {
                 if (randValue <= it.second) {
                     pathLength += (*graph)(path.back(), it.first);
                     passedCity[it.first] = true;
@@ -91,4 +91,4 @@ namespace s21{
             (*pheromonesMap)(path[0], path[0 + 1]) += (lengthInverse);
         }
     }
-}
+}// namespace s21
